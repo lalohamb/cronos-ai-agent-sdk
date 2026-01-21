@@ -18,16 +18,26 @@ dist/
 # Testing
 coverage/
 
-# Documentation - ignore all .md files except deployment-related ones
+# Documentation - ignore all .md files EXCEPT deployment/setup files
 *.md
 
-# Exception: Keep deployment/setup documentation
+# Keep deployment/setup documentation (these will NOT be ignored)
 !README.md
 !QUICK_START.md
 !INSTALL_GUIDE.md
 !SETUP_GUIDE.md
 !BUILD_AND_RUN.md
 !DOCKER.md
+!QUICKGUIDE.md
+!BUILD_CLARITY.md
+!BUILD_TEST_STEPS.md
+!MONOREPO_GUIDE.md
+
+# Keep package-level deployment docs
 !packages/*/README.md
 !packages/*/QUICK_START.md
+!packages/simplevault-landing-v1/QUICK_START.md
+!packages/core/README.md
+
+# Keep all docs folder
 !docs/**/*.md
