@@ -37,28 +37,53 @@ RUN echo "=== Contents of /usr/share/nginx/html ===" && \
     test -f /usr/share/nginx/html/index.html || (echo "ERROR: index.html not found" && exit 1)
 
 # Create nginx config for SPA routing
-RUN printf 'server {\n\
-    listen 80;\n\
-    server_name localhost;\n\
-    root /usr/share/nginx/html;\n\
-    index index.html;\n\
-    \n\
-    location / {\n\
-        try_files \$uri \$uri/ /index.html;\n\
-    }\n\
-    \n\
-    location /health {\n\
-        access_log off;\n\
-        return 200 "healthy\\n";\n\
-        add_header Content-Type text/plain;\n\
-    }\n\
-    \n\
-    gzip on;\n\
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;\n\
-}\n' > /etc/nginx/conf.d/default.conf
+RUN cat > /etc/nginx/conf.d/default.conf << 'EOF'
+server {
+    listen 80;
+    server_name _;
+    root /usr/share/nginx/html;
+    index index.html;
+    
+    # Disable access log for performance
+    access_log off;
+    error_log /var/log/nginx/error.log warn;
+    
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    
+    # SPA routing - serve index.html for all routes
+    location / {
+        try_files $uri $uri/ /index.html =404;
+    }
+    
+    # Health check endpoint
+    location /health {
+        access_log off;
+        return 200 "healthy\n";
+        add_header Content-Type text/plain;
+    }
+    
+    # Cache static assets
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+    
+    # Gzip compression
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types text/plain text/css text/xml text/javascript application/x-javascript application/xml+rss application/json application/javascript;
+}
+EOF
 
-# Verify nginx config
-RUN cat /etc/nginx/conf.d/default.conf && nginx -t
+# Verify nginx config and show it
+RUN echo "=== Nginx Config ===" && \
+    cat /etc/nginx/conf.d/default.conf && \
+    echo "=== Testing Nginx Config ===" && \
+    nginx -t
 
 # Expose port 80
 EXPOSE 80
