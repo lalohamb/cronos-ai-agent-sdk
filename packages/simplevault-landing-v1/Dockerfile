@@ -22,8 +22,8 @@ RUN ls -la /app/packages/simplevault-landing-v1/dist || (echo "Build failed: dis
 # Production stage with Nginx
 FROM nginx:alpine
 
-# Install wget for healthcheck
-RUN apk add --no-cache wget
+# Install wget and curl for healthcheck
+RUN apk add --no-cache wget curl
 
 # Copy built assets from builder
 COPY --from=builder /app/packages/simplevault-landing-v1/dist /usr/share/nginx/html
@@ -31,34 +31,36 @@ COPY --from=builder /app/packages/simplevault-landing-v1/dist /usr/share/nginx/h
 # Verify files were copied
 RUN ls -la /usr/share/nginx/html && test -f /usr/share/nginx/html/index.html || (echo "index.html not found" && exit 1)
 
-# Accept PORT as build arg (default 80)
-ARG PORT=80
-ENV PORT=${PORT}
+# Create nginx config for SPA routing
+RUN printf 'server {\n\
+    listen 80;\n\
+    server_name localhost;\n\
+    root /usr/share/nginx/html;\n\
+    index index.html;\n\
+    \n\
+    location / {\n\
+        try_files \$uri \$uri/ /index.html;\n\
+    }\n\
+    \n\
+    location /health {\n\
+        access_log off;\n\
+        return 200 "healthy\\n";\n\
+        add_header Content-Type text/plain;\n\
+    }\n\
+    \n\
+    gzip on;\n\
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;\n\
+}\n' > /etc/nginx/conf.d/default.conf
 
-# Create nginx config for SPA routing with configurable port
-RUN echo "server { \
-    listen ${PORT}; \
-    server_name localhost; \
-    root /usr/share/nginx/html; \
-    index index.html; \
-    location / { \
-        try_files \$uri \$uri/ /index.html; \
-    } \
-    location /health { \
-        access_log off; \
-        return 200 \"healthy\\n\"; \
-        add_header Content-Type text/plain; \
-    } \
-    gzip on; \
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript; \
-}" > /etc/nginx/conf.d/default.conf
+# Verify nginx config
+RUN cat /etc/nginx/conf.d/default.conf && nginx -t
 
-# Expose the configured port
-EXPOSE ${PORT}
+# Expose port 80
+EXPOSE 80
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost:${PORT}/health || exit 1
+# Health check - try curl first, fallback to wget
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost/health || wget -q -O- http://localhost/health || exit 1
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
