@@ -16,6 +16,9 @@ RUN npm run build
 # Production stage with Nginx
 FROM nginx:alpine
 
+# Install wget for healthcheck
+RUN apk add --no-cache wget
+
 # Copy built assets from builder
 COPY --from=builder /app/packages/simplevault-landing-v1/dist /usr/share/nginx/html
 
