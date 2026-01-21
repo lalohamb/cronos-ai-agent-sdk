@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Navigation from './Navigation';
 import { SDKHealthResults } from '../utils/sdkHealthChecker';
 import { SentinelAgentSDK, AgentDecision } from '@sentinal/ai-agent-sdk';
+import PaymentModal from './PaymentModal';
 
 interface AgentDashboardProps {
   sdk: SentinelAgentSDK | null;
@@ -26,6 +27,8 @@ export default function AgentDashboard({ sdk, isReady, healthStatus }: AgentDash
   const [sliderValues, setSliderValues] = useState<{[key: string]: number}>({});
   const [isExecuting, setIsExecuting] = useState(false);
   const [executionError, setExecutionError] = useState<string | null>(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [pendingPayment, setPendingPayment] = useState<{amount: number; currency: string} | null>(null);
 
   // Future agents (subscription required)
   const futureAgents = [
@@ -545,6 +548,16 @@ export class X402PaymentAgent extends BaseAgent {
 
       console.log('✅ Decision:', decision);
       console.log(`⏱️ Execution time: ${executionTime.toFixed(2)}ms`);
+
+      // Check if payment is required (x402 agent)
+      if (selectedAgent === 'x402-payment-agent' && 
+          decision.action?.type === 'PAYMENT_REQUIRED') {
+        setPendingPayment({
+          amount: context.customData.amount,
+          currency: context.customData.currency
+        });
+        setShowPaymentModal(true);
+      }
 
       // Add result to history
       setAgentResults(prev => [{
@@ -1132,6 +1145,48 @@ export class X402PaymentAgent extends BaseAgent {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Payment Modal */}
+      {showPaymentModal && pendingPayment && (
+        <PaymentModal
+          isOpen={showPaymentModal}
+          amount={pendingPayment.amount}
+          currency={pendingPayment.currency}
+          onClose={() => {
+            setShowPaymentModal(false);
+            setPendingPayment(null);
+          }}
+          onPaymentComplete={(transactionId, provider) => {
+            console.log(`💳 Payment completed: ${transactionId} via ${provider}`);
+            setShowPaymentModal(false);
+            setPendingPayment(null);
+            
+            // Add successful payment to results
+            setAgentResults(prev => [{
+              id: Date.now(),
+              agent: 'x402-payment-agent',
+              result: {
+                action: {
+                  type: 'PAYMENT_APPROVED',
+                  transactionId,
+                  reason: `Payment processed via ${provider}`,
+                  severity: 'LOW'
+                },
+                reason: `Payment of $${pendingPayment.amount} ${pendingPayment.currency} completed successfully`,
+                confidence: 1.0
+              },
+              timestamp: new Date().toLocaleTimeString(),
+              executionTime: 0
+            }, ...prev.slice(0, 4)]);
+          }}
+          onPaymentFailed={(error) => {
+            console.error(`❌ Payment failed: ${error}`);
+            setExecutionError(error);
+            setShowPaymentModal(false);
+            setPendingPayment(null);
+          }}
+        />
       )}
     </div>
   );
