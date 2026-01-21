@@ -3,21 +3,23 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# Copy entire monorepo structure
+# Copy root package.json and all packages
+# Note: Build context is repo root when using Dockerfile Location in Coolify
 COPY package*.json ./
 COPY packages ./packages
 
 # Install ALL workspace dependencies
-RUN npm install
+RUN npm install || (echo "npm install failed" && exit 1)
 
 # Build core package first (required dependency)
-RUN cd packages/core && npm run build
+RUN cd packages/core && npm run build || (echo "Core build failed" && exit 1)
 
 # Build simplevault-landing-v1
-RUN cd packages/simplevault-landing-v1 && npm run build
+RUN cd packages/simplevault-landing-v1 && npm run build || (echo "Simplevault build failed" && exit 1)
 
-# Verify build output exists
-RUN ls -la /app/packages/simplevault-landing-v1/dist || (echo "Build failed: dist folder not found" && exit 1)
+# Verify build output exists and show contents
+RUN echo "=== Build output ===" && \
+    ls -laR /app/packages/simplevault-landing-v1/dist || (echo "Build failed: dist folder not found" && exit 1)
 
 # Production stage with Nginx
 FROM nginx:alpine
@@ -28,8 +30,11 @@ RUN apk add --no-cache wget curl
 # Copy built assets from builder
 COPY --from=builder /app/packages/simplevault-landing-v1/dist /usr/share/nginx/html
 
-# Verify files were copied
-RUN ls -la /usr/share/nginx/html && test -f /usr/share/nginx/html/index.html || (echo "index.html not found" && exit 1)
+# Verify files were copied and show what's in nginx html folder
+RUN echo "=== Contents of /usr/share/nginx/html ===" && \
+    ls -laR /usr/share/nginx/html && \
+    echo "=== Checking for index.html ===" && \
+    test -f /usr/share/nginx/html/index.html || (echo "ERROR: index.html not found" && exit 1)
 
 # Create nginx config for SPA routing
 RUN printf 'server {\n\
