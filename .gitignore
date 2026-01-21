@@ -1,7 +1,33 @@
+# Dependencies
 node_modules/
+
+# Build outputs
 dist/
-*.log
-.env
-.DS_Store
-coverage/
 *.tsbuildinfo
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+
+# OS files
+.DS_Store
+
+# Testing
+coverage/
+
+# Documentation - ignore all .md files except deployment-related ones
+*.md
+
+# Exception: Keep deployment/setup documentation
+!README.md
+!QUICK_START.md
+!INSTALL_GUIDE.md
+!SETUP_GUIDE.md
+!BUILD_AND_RUN.md
+!DOCKER.md
+!packages/*/README.md
+!packages/*/QUICK_START.md
+!docs/**/*.md
