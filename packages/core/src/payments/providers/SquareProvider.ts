@@ -61,10 +61,7 @@ export class SquareProvider implements PaymentProvider {
         // For now, simulate success
         return {
           success: true,
-          transactionId: `sqr_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-          provider: 'square',
-          amount: request.amount,
-          currency: request.currency
+          transactionId: `sqr_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
         };
       }
 
