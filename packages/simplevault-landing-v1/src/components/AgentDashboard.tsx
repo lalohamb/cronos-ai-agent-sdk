@@ -874,8 +874,8 @@ export class X402PaymentAgent extends BaseAgent {
                           {/* Real-time Decision Indicator */}
                           <div className="bg-white border-2 rounded-lg p-4">
                             <div className="flex items-center justify-between mb-2">
-                              <span className="text-sm font-medium text-gray-700">Agent Decision Preview:</span>
-                              <span className="text-xs text-gray-500">Live evaluation</span>
+                              <span className="text-sm font-medium text-gray-700">x402 Status Message:</span>
+                              <span className="text-xs text-gray-500">HTTP 402 Payment Required</span>
                             </div>
                             {(() => {
                               const amount = (sliderValues[`${selectedAgent}-0`] || 50) / 10;
@@ -883,8 +883,11 @@ export class X402PaymentAgent extends BaseAgent {
                                 return (
                                   <div className="flex items-center space-x-2 p-3 bg-red-50 border border-red-200 rounded-lg">
                                     <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                                    <div>
-                                      <div className="font-semibold text-red-800">PAYMENT_FAILED</div>
+                                    <div className="flex-1">
+                                      <div className="flex items-center justify-between mb-1">
+                                        <span className="font-semibold text-red-800">PAYMENT_FAILED</span>
+                                        <span className="text-xs font-mono bg-red-100 px-2 py-0.5 rounded">HTTP 400</span>
+                                      </div>
                                       <div className="text-xs text-red-600">Invalid amount - must be greater than $0</div>
                                     </div>
                                   </div>
@@ -893,8 +896,11 @@ export class X402PaymentAgent extends BaseAgent {
                                 return (
                                   <div className="flex items-center space-x-2 p-3 bg-green-50 border border-green-200 rounded-lg">
                                     <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                                    <div>
-                                      <div className="font-semibold text-green-800">PAYMENT_APPROVED (Auto)</div>
+                                    <div className="flex-1">
+                                      <div className="flex items-center justify-between mb-1">
+                                        <span className="font-semibold text-green-800">PAYMENT_APPROVED</span>
+                                        <span className="text-xs font-mono bg-green-100 px-2 py-0.5 rounded">HTTP 200</span>
+                                      </div>
                                       <div className="text-xs text-green-600">Micropayment - automatically approved</div>
                                     </div>
                                   </div>
@@ -903,8 +909,11 @@ export class X402PaymentAgent extends BaseAgent {
                                 return (
                                   <div className="flex items-center space-x-2 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
                                     <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></div>
-                                    <div>
-                                      <div className="font-semibold text-yellow-800">PAYMENT_REQUIRED (Confirmation)</div>
+                                    <div className="flex-1">
+                                      <div className="flex items-center justify-between mb-1">
+                                        <span className="font-semibold text-yellow-800">PAYMENT_REQUIRED</span>
+                                        <span className="text-xs font-mono bg-yellow-100 px-2 py-0.5 rounded">HTTP 402</span>
+                                      </div>
                                       <div className="text-xs text-yellow-600">Standard payment - user confirmation needed</div>
                                     </div>
                                   </div>
@@ -913,8 +922,11 @@ export class X402PaymentAgent extends BaseAgent {
                                 return (
                                   <div className="flex items-center space-x-2 p-3 bg-orange-50 border border-orange-200 rounded-lg">
                                     <div className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
-                                    <div>
-                                      <div className="font-semibold text-orange-800">PAYMENT_REQUIRED (Enhanced)</div>
+                                    <div className="flex-1">
+                                      <div className="flex items-center justify-between mb-1">
+                                        <span className="font-semibold text-orange-800">PAYMENT_REQUIRED</span>
+                                        <span className="text-xs font-mono bg-orange-100 px-2 py-0.5 rounded">HTTP 402</span>
+                                      </div>
                                       <div className="text-xs text-orange-600">Large payment - enhanced verification required</div>
                                     </div>
                                   </div>
