@@ -11,6 +11,7 @@ import {
   EmergencyBrake,
   ThresholdGuard,
   AnomalyDetector,
+  X402PaymentAgent,
   LogLevel
 } from '@sentinal/ai-agent-sdk';
 
@@ -47,7 +48,8 @@ function App() {
         sentinelSDK.registerAgent('emergency-brake', new EmergencyBrake());
         sentinelSDK.registerAgent('threshold-guard', new ThresholdGuard());
         sentinelSDK.registerAgent('anomaly-detector', new AnomalyDetector());
-        console.log('✅ 5 agents registered successfully');
+        sentinelSDK.registerAgent('x402-payment-agent', new X402PaymentAgent());
+        console.log('✅ 6 agents registered successfully');
 
         // Register the SimpleVault contract using environment variables
         const contractId = import.meta.env.VITE_CONTRACT_ID || 'simple-vault'; //Fallback to SimpleVault Contract on Cronos_Testnet

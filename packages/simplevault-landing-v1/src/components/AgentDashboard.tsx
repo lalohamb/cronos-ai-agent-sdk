@@ -30,7 +30,6 @@ export default function AgentDashboard({ sdk, isReady, healthStatus }: AgentDash
   // Future agents (subscription required)
   const futureAgents = [
     { id: 'ai-reasoning-agent', name: 'AI Reasoning Agent', type: 'AI/LLM', description: 'Uses large language models for complex decision-making and natural language understanding' },
-    { id: 'x402-payment-agent', name: 'x402 Payment Agent', type: 'x402', description: 'Handles HTTP 402 payment-required flows for micropayments and pay-per-use APIs' },
     { id: 'withdrawal-sentinel', name: 'Withdrawal Risk Sentinel', type: 'Protective', description: 'Monitors withdrawal patterns and prevents risky fund movements' },
     { id: 'settlement-optimizer', name: 'Settlement Batch Optimizer', type: 'Efficiency', description: 'Optimizes batch processing for complex settlements' },
     { id: 'volatility-governor', name: 'Portfolio Volatility Governor', type: 'Market-Responsive', description: 'Adjusts risk parameters based on market volatility' },
@@ -374,6 +373,85 @@ export class AnomalyDetector extends BaseAgent {
     };
   }
 }`
+    },
+    {
+      id: 'x402-payment-agent',
+      name: 'x402 Payment Agent',
+      type: 'Payment',
+      purpose: 'Handles HTTP 402 payment-required flows for micropayments and pay-per-use APIs',
+      controls: ['Payment Amount', 'Currency', 'Auto-Approve Threshold'],
+      description: 'Processes payments and manages pay-per-use billing automatically',
+      codeExplanation: 'Deterministic payment processing with configurable thresholds. Micropayments under $1 are auto-approved, standard payments require confirmation, and large payments need enhanced verification. Supports multiple currencies and payment methods.',
+      code: `import { BaseAgent } from '../BaseAgent';
+import { AgentContext, AgentDecision } from '../types';
+
+export class X402PaymentAgent extends BaseAgent {
+  config = {
+    id: 'x402-payment-agent',
+    name: 'x402 Payment Agent',
+    description: 'Handles HTTP 402 payment-required flows',
+    version: '1.0.0'
+  };
+
+  async decide(context: AgentContext): Promise<AgentDecision> {
+    const { amount, currency } = context.customData;
+    const microPaymentThreshold = 1.0;
+    const standardPaymentThreshold = 10.0;
+
+    if (amount <= 0) {
+      return {
+        action: {
+          type: 'PAYMENT_FAILED',
+          reason: 'Invalid payment amount',
+          severity: 'HIGH'
+        },
+        reason: 'Payment amount must be greater than zero',
+        confidence: 1.0
+      };
+    }
+
+    if (amount < microPaymentThreshold) {
+      return {
+        action: {
+          type: 'PAYMENT_APPROVED',
+          amount,
+          currency,
+          transactionId: \`tx_\${Date.now()}\`,
+          reason: 'Micropayment auto-approved',
+          severity: 'LOW'
+        },
+        reason: \`Micropayment of \${amount} \${currency} approved\`,
+        confidence: 0.95
+      };
+    }
+
+    if (amount < standardPaymentThreshold) {
+      return {
+        action: {
+          type: 'PAYMENT_REQUIRED',
+          amount,
+          currency,
+          reason: 'Payment confirmation required',
+          severity: 'MEDIUM'
+        },
+        reason: \`Payment of \${amount} \${currency} requires confirmation\`,
+        confidence: 0.9
+      };
+    }
+
+    return {
+      action: {
+        type: 'PAYMENT_REQUIRED',
+        amount,
+        currency,
+        reason: 'Enhanced verification required',
+        severity: 'HIGH'
+      },
+      reason: \`Large payment of \${amount} \${currency} requires verification\`,
+      confidence: 0.85
+    };
+  }
+}`
     }
   ];
 
@@ -423,6 +501,15 @@ export class AnomalyDetector extends BaseAgent {
           currentValue: sliderValues[`${agentId}-0`] || 50,
           historicalAverage: 50,
           standardDeviation: sliderValues[`${agentId}-1`] || 10
+        };
+        break;
+
+      case 'x402-payment-agent':
+        baseContext.customData = {
+          amount: (sliderValues[`${agentId}-0`] || 5) / 10, // Convert to dollars (0.5 - 10.0)
+          currency: 'USD',
+          paymentMethod: 'cronos',
+          userId: baseContext.user
         };
         break;
 
