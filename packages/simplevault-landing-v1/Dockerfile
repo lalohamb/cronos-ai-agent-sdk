@@ -1,4 +1,5 @@
 # Multi-stage build for SimpleVault Landing v1
+# Updated: x402 redesign with three capabilities showcase
 FROM node:18-alpine AS builder
 
 WORKDIR /app
