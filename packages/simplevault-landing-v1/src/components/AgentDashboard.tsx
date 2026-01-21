@@ -381,10 +381,10 @@ export class AnomalyDetector extends BaseAgent {
       id: 'x402-payment-agent',
       name: 'x402 Payment Agent',
       type: 'Payment',
-      purpose: 'Handles HTTP 402 payment-required flows for micropayments and pay-per-use APIs',
+      purpose: 'Implements the HTTP 402 Payment Required standard with intelligent decision-making, crypto wallet integration, and fiat payment processing for micropayments and pay-per-use APIs',
       controls: ['Payment Amount ($)', 'Payment Method', 'Test Mode'],
-      description: 'Processes payments and manages pay-per-use billing automatically',
-      codeExplanation: 'Deterministic payment processing with configurable thresholds. Micropayments under $1 are auto-approved, standard payments require confirmation, and large payments need enhanced verification. Supports multiple currencies and payment methods.',
+      description: 'Complete x402 payment solution with threshold-based decisions, MetaMask wallet support, and Square card processing',
+      codeExplanation: 'This agent demonstrates the complete HTTP 402 Payment Required standard with three integrated capabilities: (1) Intelligent decision logic using configurable thresholds - micropayments under $1 are auto-approved, $1-$10 require user confirmation, and amounts over $10 trigger enhanced verification. (2) Crypto wallet integration via MetaMask for on-chain Cronos payments with transaction verification. (3) Fiat payment processing through Square for traditional credit/debit card transactions with PCI DSS compliance. The agent evaluates each payment request and routes it through the appropriate payment channel based on amount and user preference.',
       code: `import { BaseAgent } from '../BaseAgent';
 import { AgentContext, AgentDecision } from '../types';
 
@@ -750,12 +750,22 @@ export class X402PaymentAgent extends BaseAgent {
 
                       <h4 className="text-lg font-medium text-gray-900 mb-3">How it Works</h4>
                       <div className="bg-gray-50 rounded-lg p-4">
-                        <ul className="space-y-2 text-sm text-gray-700">
-                          <li>• Monitors contract events in real-time</li>
-                          <li>• Applies {currentAgent.type.toLowerCase()} analysis</li>
-                          <li>• Executes protective actions when needed</li>
-                          <li>• Provides detailed execution reports</li>
-                        </ul>
+                        {selectedAgent === 'x402-payment-agent' ? (
+                          <ul className="space-y-2 text-sm text-gray-700">
+                            <li>• <strong>Decision Engine:</strong> Evaluates payment amounts against configurable thresholds ($1, $10) to determine approval level</li>
+                            <li>• <strong>Crypto Payments:</strong> Integrates with MetaMask for Cronos blockchain transactions with on-chain verification</li>
+                            <li>• <strong>Fiat Payments:</strong> Processes credit/debit cards through Square with PCI DSS compliant tokenization</li>
+                            <li>• <strong>Smart Routing:</strong> Automatically routes payments based on amount, method preference, and risk assessment</li>
+                            <li>• <strong>Real-time Feedback:</strong> Provides instant decision preview and detailed execution reports</li>
+                          </ul>
+                        ) : (
+                          <ul className="space-y-2 text-sm text-gray-700">
+                            <li>• Monitors contract events in real-time</li>
+                            <li>• Applies {currentAgent.type.toLowerCase()} analysis</li>
+                            <li>• Executes protective actions when needed</li>
+                            <li>• Provides detailed execution reports</li>
+                          </ul>
+                        )}
                       </div>
                     </div>
                   )}
@@ -859,6 +869,58 @@ export class X402PaymentAgent extends BaseAgent {
                               <span>$10.00 (Standard)</span>
                               <span>$15.00 (Large)</span>
                             </div>
+                          </div>
+
+                          {/* Real-time Decision Indicator */}
+                          <div className="bg-white border-2 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-sm font-medium text-gray-700">Agent Decision Preview:</span>
+                              <span className="text-xs text-gray-500">Live evaluation</span>
+                            </div>
+                            {(() => {
+                              const amount = (sliderValues[`${selectedAgent}-0`] || 50) / 10;
+                              if (amount <= 0) {
+                                return (
+                                  <div className="flex items-center space-x-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+                                    <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                                    <div>
+                                      <div className="font-semibold text-red-800">PAYMENT_FAILED</div>
+                                      <div className="text-xs text-red-600">Invalid amount - must be greater than $0</div>
+                                    </div>
+                                  </div>
+                                );
+                              } else if (amount < 1.0) {
+                                return (
+                                  <div className="flex items-center space-x-2 p-3 bg-green-50 border border-green-200 rounded-lg">
+                                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                    <div>
+                                      <div className="font-semibold text-green-800">PAYMENT_APPROVED (Auto)</div>
+                                      <div className="text-xs text-green-600">Micropayment - automatically approved</div>
+                                    </div>
+                                  </div>
+                                );
+                              } else if (amount < 10.0) {
+                                return (
+                                  <div className="flex items-center space-x-2 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                    <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></div>
+                                    <div>
+                                      <div className="font-semibold text-yellow-800">PAYMENT_REQUIRED (Confirmation)</div>
+                                      <div className="text-xs text-yellow-600">Standard payment - user confirmation needed</div>
+                                    </div>
+                                  </div>
+                                );
+                              } else {
+                                return (
+                                  <div className="flex items-center space-x-2 p-3 bg-orange-50 border border-orange-200 rounded-lg">
+                                    <div className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
+                                    <div>
+                                      <div className="font-semibold text-orange-800">PAYMENT_REQUIRED (Enhanced)</div>
+                                      <div className="text-xs text-orange-600">Large payment - enhanced verification required</div>
+                                    </div>
+                                  </div>
+                                );
+                              }
+                            })()}
                           </div>
 
                           {/* Payment Method Selector */}
