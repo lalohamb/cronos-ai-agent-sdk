@@ -382,7 +382,7 @@ export class AnomalyDetector extends BaseAgent {
       name: 'x402 Payment Agent',
       type: 'Payment',
       purpose: 'Handles HTTP 402 payment-required flows for micropayments and pay-per-use APIs',
-      controls: ['Payment Amount', 'Currency', 'Auto-Approve Threshold'],
+      controls: ['Payment Amount ($)', 'Payment Method', 'Test Mode'],
       description: 'Processes payments and manages pay-per-use billing automatically',
       codeExplanation: 'Deterministic payment processing with configurable thresholds. Micropayments under $1 are auto-approved, standard payments require confirmation, and large payments need enhanced verification. Supports multiple currencies and payment methods.',
       code: `import { BaseAgent } from '../BaseAgent';
@@ -778,49 +778,215 @@ export class X402PaymentAgent extends BaseAgent {
 
                   {activeTab === 'action' && (
                     <div>
-                      <h4 className="text-lg font-medium text-gray-900 mb-3">Controls</h4>
-                      <div className="grid grid-cols-1 gap-3 mb-6">
-                        {currentAgent.controls.map((control, index) => {
-                          const key = `${selectedAgent}-${index}`;
-                          const value = sliderValues[key] || 50;
-                          return (
-                            <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                              <label className="text-sm font-medium text-gray-700">{control}</label>
-                              <div className="flex items-center space-x-3">
-                                <input
-                                  type="range"
-                                  className="w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                                  value={value}
-                                  onChange={(e) => setSliderValues(prev => ({...prev, [key]: parseInt(e.target.value)}))}
-                                />
-                                <span className="text-sm font-medium text-gray-900 w-8">{value}</span>
+                      {/* x402 Special UI */}
+                      {selectedAgent === 'x402-payment-agent' ? (
+                        <div className="space-y-6">
+                          {/* Header */}
+                          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
+                            <h4 className="text-lg font-semibold text-gray-900 mb-2">x402 Payment Standard Demo</h4>
+                            <p className="text-sm text-gray-700">
+                              This agent demonstrates the complete HTTP 402 Payment Required standard with three key capabilities:
+                            </p>
+                          </div>
+
+                          {/* Three Capabilities */}
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            {/* 1. Decision Making */}
+                            <div className="bg-white border-2 border-blue-200 rounded-lg p-4">
+                              <div className="flex items-center mb-3">
+                                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-2">1</div>
+                                <h5 className="font-semibold text-gray-900">Decision Logic</h5>
+                              </div>
+                              <p className="text-sm text-gray-600 mb-2">Agent evaluates payment amounts and determines:</p>
+                              <ul className="text-xs text-gray-600 space-y-1">
+                                <li>• &lt;$1: Auto-approve</li>
+                                <li>• $1-$10: Require confirmation</li>
+                                <li>• &gt;$10: Enhanced verification</li>
+                              </ul>
+                            </div>
+
+                            {/* 2. Wallet Integration */}
+                            <div className="bg-white border-2 border-purple-200 rounded-lg p-4">
+                              <div className="flex items-center mb-3">
+                                <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold mr-2">2</div>
+                                <h5 className="font-semibold text-gray-900">Crypto Wallet</h5>
+                              </div>
+                              <p className="text-sm text-gray-600 mb-2">Blockchain payment processing:</p>
+                              <ul className="text-xs text-gray-600 space-y-1">
+                                <li>• MetaMask integration</li>
+                                <li>• Cronos network</li>
+                                <li>• On-chain verification</li>
+                              </ul>
+                            </div>
+
+                            {/* 3. Fiat Transactions */}
+                            <div className="bg-white border-2 border-green-200 rounded-lg p-4">
+                              <div className="flex items-center mb-3">
+                                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold mr-2">3</div>
+                                <h5 className="font-semibold text-gray-900">Fiat Payments</h5>
+                              </div>
+                              <p className="text-sm text-gray-600 mb-2">Traditional card processing:</p>
+                              <ul className="text-xs text-gray-600 space-y-1">
+                                <li>• Square integration</li>
+                                <li>• Credit/debit cards</li>
+                                <li>• PCI DSS compliant</li>
+                              </ul>
+                            </div>
+                          </div>
+
+                          {/* Payment Amount Control */}
+                          <div className="bg-gray-50 rounded-lg p-4">
+                            <label className="block text-sm font-medium text-gray-700 mb-3">Payment Amount (USD)</label>
+                            <div className="flex items-center space-x-4">
+                              <input
+                                type="range"
+                                min="0"
+                                max="150"
+                                value={sliderValues[`${selectedAgent}-0`] || 50}
+                                onChange={(e) => setSliderValues(prev => ({...prev, [`${selectedAgent}-0`]: parseInt(e.target.value)}))}
+                                className="flex-1 h-3 bg-gradient-to-r from-green-200 via-yellow-200 to-red-200 rounded-lg appearance-none cursor-pointer"
+                              />
+                              <div className="text-right min-w-[80px]">
+                                <div className="text-2xl font-bold text-gray-900">
+                                  ${((sliderValues[`${selectedAgent}-0`] || 50) / 10).toFixed(2)}
+                                </div>
+                                <div className="text-xs text-gray-500">USD</div>
                               </div>
                             </div>
-                          );
-                        })}
-                      </div>
+                            <div className="flex justify-between text-xs text-gray-500 mt-2">
+                              <span>$0.00 (Invalid)</span>
+                              <span>$1.00 (Micro)</span>
+                              <span>$10.00 (Standard)</span>
+                              <span>$15.00 (Large)</span>
+                            </div>
+                          </div>
 
-                      <button
-                        onClick={executeAgent}
-                        disabled={isExecuting || !sdk}
-                        className={`w-full py-3 px-4 rounded-lg transition-colors font-medium mb-6 flex items-center justify-center ${
-                          isExecuting || !sdk
-                            ? 'bg-gray-400 cursor-not-allowed'
-                            : 'bg-blue-600 hover:bg-blue-700 text-white'
-                        }`}
-                      >
-                        {isExecuting ? (
-                          <>
-                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            Executing...
-                          </>
-                        ) : (
-                          `Execute ${currentAgent.name}`
-                        )}
-                      </button>
+                          {/* Payment Method Selector */}
+                          <div className="bg-gray-50 rounded-lg p-4">
+                            <label className="block text-sm font-medium text-gray-700 mb-3">Preferred Payment Method</label>
+                            <div className="grid grid-cols-2 gap-3">
+                              <button
+                                onClick={() => setSliderValues(prev => ({...prev, [`${selectedAgent}-method`]: 'wallet'}))}
+                                className={`p-3 rounded-lg border-2 transition-all ${
+                                  (sliderValues[`${selectedAgent}-method`] || 'wallet') === 'wallet'
+                                    ? 'border-purple-500 bg-purple-50'
+                                    : 'border-gray-200 hover:border-gray-300'
+                                }`}
+                              >
+                                <div className="flex items-center justify-center space-x-2">
+                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                  </svg>
+                                  <span className="font-medium">Crypto Wallet</span>
+                                </div>
+                              </button>
+                              <button
+                                onClick={() => setSliderValues(prev => ({...prev, [`${selectedAgent}-method`]: 'card'}))}
+                                className={`p-3 rounded-lg border-2 transition-all ${
+                                  sliderValues[`${selectedAgent}-method`] === 'card'
+                                    ? 'border-green-500 bg-green-50'
+                                    : 'border-gray-200 hover:border-gray-300'
+                                }`}
+                              >
+                                <div className="flex items-center justify-center space-x-2">
+                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                  </svg>
+                                  <span className="font-medium">Credit Card</span>
+                                </div>
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Execute Button */}
+                          <button
+                            onClick={executeAgent}
+                            disabled={isExecuting || !sdk}
+                            className={`w-full py-4 px-4 rounded-lg transition-colors font-semibold text-lg flex items-center justify-center ${
+                              isExecuting || !sdk
+                                ? 'bg-gray-400 cursor-not-allowed'
+                                : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg'
+                            }`}
+                          >
+                            {isExecuting ? (
+                              <>
+                                <svg className="animate-spin -ml-1 mr-3 h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Processing Payment...
+                              </>
+                            ) : (
+                              <>
+                                <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Test x402 Payment Flow
+                              </>
+                            )}
+                          </button>
+
+                          {/* Info Box */}
+                          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <div className="flex items-start">
+                              <svg className="w-5 h-5 text-blue-600 mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              <div className="text-sm text-blue-800">
+                                <p className="font-medium mb-1">How it works:</p>
+                                <p>The agent evaluates the amount and determines if payment is required. For amounts ≥$1, a payment modal opens where you can choose between crypto wallet or credit card payment methods.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        /* Original controls for other agents */
+                        <div>
+                          <h4 className="text-lg font-medium text-gray-900 mb-3">Controls</h4>
+                          <div className="grid grid-cols-1 gap-3 mb-6">
+                            {currentAgent.controls.map((control, index) => {
+                              const key = `${selectedAgent}-${index}`;
+                              const value = sliderValues[key] || 50;
+                              return (
+                                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                  <label className="text-sm font-medium text-gray-700">{control}</label>
+                                  <div className="flex items-center space-x-3">
+                                    <input
+                                      type="range"
+                                      className="w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                                      value={value}
+                                      onChange={(e) => setSliderValues(prev => ({...prev, [key]: parseInt(e.target.value)}))}
+                                    />
+                                    <span className="text-sm font-medium text-gray-900 w-8">{value}</span>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+
+                          <button
+                            onClick={executeAgent}
+                            disabled={isExecuting || !sdk}
+                            className={`w-full py-3 px-4 rounded-lg transition-colors font-medium mb-6 flex items-center justify-center ${
+                              isExecuting || !sdk
+                                ? 'bg-gray-400 cursor-not-allowed'
+                                : 'bg-blue-600 hover:bg-blue-700 text-white'
+                            }`}
+                          >
+                            {isExecuting ? (
+                              <>
+                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Executing...
+                              </>
+                            ) : (
+                              `Execute ${currentAgent.name}`
+                            )}
+                          </button>
+                        </div>
+                      )}
 
                       <h4 className="text-lg font-medium text-gray-900 mb-3">Recent Results</h4>
 
