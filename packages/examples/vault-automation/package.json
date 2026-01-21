@@ -1,0 +1,16 @@
+{
+  "name": "vault-automation-example",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "dependencies": {
+    "@sentinel/ai-agent-sdk": "file:../../core",
+    "ethers": "^6.9.2"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

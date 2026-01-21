@@ -1,0 +1,2275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronos AI Agent SDK - Complete Walkthrough</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">
+            <h2>🤖 Cronos AI SDK</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#overview" class="nav-link active">🌟 Overview</a></li>
+            <li><a href="#architecture" class="nav-link">🏗️ Architecture</a></li>
+            <li><a href="#system-components" class="nav-link">🔧 System Components</a></li>
+            <li><a href="#data-flow" class="nav-link">🔄 Data Flow</a></li>
+            <li><a href="#agents" class="nav-link">🧠 Understanding Agents</a></li>
+            <li><a href="#builtin-agents" class="nav-link">🛠️ Built-in Agents</a></li>
+            <li><a href="#custom-agents" class="nav-link">🎨 Custom Agents</a></li>
+            <li><a href="#implementation" class="nav-link">🚀 Implementation</a></li>
+            <li><a href="#testing" class="nav-link">🧪 Testing</a></li>
+            <li><a href="#advanced" class="nav-link">⚡ Advanced Features</a></li>
+            <li><a href="#enterprise" class="nav-link">🏢 Enterprise Features</a></li>
+            <li><a href="#ui-components" class="nav-link">🎛️ UI Dashboard</a></li>
+            <li><a href="#x402-payments" class="nav-link">💳 x402 Payments</a></li>
+            <li><a href="#webhooks" class="nav-link">🔗 Webhooks & API</a></li>
+            <li><a href="#auditing" class="nav-link">📈 Auditing & Compliance</a></li>
+            <li><a href="#production" class="nav-link">🏆 Production</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <header class="hero">
+            <h1>🎓 Complete Walkthrough: Cronos AI Agent SDK</h1>
+            <p class="subtitle">From Beginner to Expert - Master intelligent automation for smart contracts</p>
+        </header>
+
+        <section id="overview" class="section">
+            <h2>🌟 Level 1: What is this?</h2>
+            <div class="card">
+                <p>Think of this SDK as <strong>adding a smart brain to your smart contracts</strong>. Instead of just executing code, your contracts can now "think" and make intelligent decisions.</p>
+                
+                <div class="comparison">
+                    <div class="before">
+                        <h4>❌ Before</h4>
+                        <p>Your smart contract is like a vending machine - it just follows simple rules</p>
+                    </div>
+                    <div class="after">
+                        <h4>✅ After</h4>
+                        <p>Your smart contract is like a smart assistant that analyzes situations and recommends actions</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture" class="section">
+            <h2>🏗️ Level 2: Core Architecture</h2>
+            <div class="card">
+                <p>The SDK has 5 main components that work together:</p>
+                
+                <div class="architecture-grid">
+                    <div class="component">
+                        <h4>1. CronosAgentSDK</h4>
+                        <p>The Main Controller</p>
+                        <pre><code>const sdk = new CronosAgentSDK({
+  network: 'cronos-testnet',
+  rpcUrl: 'https://evm-t3.cronos.org'
+});</code></pre>
+                    </div>
+                    
+                    <div class="component">
+                        <h4>2. Agents</h4>
+                        <p>The Decision Makers</p>
+                        <pre><code>class RiskMonitor extends BaseAgent {
+  async decide(context) {
+    if (balance < threshold) return { action: 'BLOCK' };
+    return { action: 'ALLOW' };
+  }
+}</code></pre>
+                    </div>
+                    
+                    <div class="component">
+                        <h4>3. Contracts</h4>
+                        <p>Your Smart Contracts</p>
+                        <pre><code>await sdk.registerContract('my-vault', {
+  address: '0x123...',
+  abi: vaultABI
+});</code></pre>
+                    </div>
+                    
+                    <div class="component">
+                        <h4>4. Events</h4>
+                        <p>Blockchain Notifications</p>
+                        <pre><code>sdk.onContractEvent('my-vault', 'Deposited', async (event) => {
+  // Someone deposited money - let's analyze it
+});</code></pre>
+                    </div>
+                    
+                    <div class="component">
+                        <h4>5. Policies</h4>
+                        <p>Safety Rules</p>
+                        <pre><code>sdk.addPolicy({
+  validate: (decision) => decision.confidence >= 0.7
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="system-components" class="section">
+            <h2>🏗️ Level 2.5: System Components</h2>
+            <div class="card">
+                <p>The SDK contains <strong>1 Agent folder</strong> and <strong>9 System Component folders</strong> that work together:</p>
+                
+                <h3>🎯 <strong>Agents</strong> (Only 1 folder):</h3>
+                <div class="component-table">
+                    <div class="component-row">
+                        <div class="folder-name"><strong><code>agents/</code></strong></div>
+                        <div class="folder-description">Contains the 5 built-in AI agents</div>
+                    </div>
+                </div>
+                
+                <h4>🤖 <strong>Built-in AI Agents (5 Total):</strong></h4>
+                <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd; background-color: #f8f9fa;"><strong>Agent</strong></th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd; background-color: #f8f9fa;"><strong>Type</strong></th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd; background-color: #f8f9fa;"><strong>Purpose</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>RiskMonitor</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><span style="background-color: #e3f2fd; color: #1976d2; padding: 2px 6px; border-radius: 3px; font-size: 12px;">Deterministic</span></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Monitors risk metrics and recommends protective actions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LiquidityOptimizer</strong></td>
+                            <td><span class="agent-type deterministic">Deterministic</span></td>
+                            <td>Optimizes liquidity allocation based on market conditions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EmergencyBrake</strong></td>
+                            <td><span class="agent-type deterministic">Deterministic</span></td>
+                            <td>Triggers emergency stops when critical thresholds are breached</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ThresholdGuard</strong></td>
+                            <td><span class="agent-type deterministic">Deterministic</span></td>
+                            <td>Enforces threshold limits on operations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AnomalyDetector</strong></td>
+                            <td><span class="agent-type statistical">Statistical</span></td>
+                            <td>Detects unusual patterns using Z-score analysis</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <br>
+
+                <div class="agent-types-legend" style="margin-left: 40px;">
+                    <h5>📊 <strong>Agent Types:</strong></h5>
+                    <ul>
+                        <li><span class="agent-type deterministic">Deterministic</span> = Rule-based logic with predictable outcomes</li>
+                        <li><span class="agent-type statistical">Statistical</span> = Mathematical analysis using statistical methods</li>
+                    </ul>
+                </div>
+                
+                <br>
+                <br>
+                
+                <h3>🏗️ <strong>System Components</strong> (All other folders):</h3>
+                
+                <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd; background-color: #f8f9fa;"><strong>Folder</strong></th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd; background-color: #f8f9fa;"><strong>What It Is</strong></th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd; background-color: #f8f9fa;"><strong>Purpose</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><code>ai/</code></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>AI Integration</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">OpenAI provider for intelligent features</td>
+                        </tr>
+                        <tr>
+                            <td><code>api/</code></td>
+                            <td><strong>REST API Server</strong></td>
+                            <td>Express server, webhooks, API endpoints</td>
+                        </tr>
+                        <tr>
+                            <td><code>audit/</code></td>
+                            <td><strong>Audit System</strong></td>
+                            <td>Compliance and audit trail types</td>
+                        </tr>
+                        <tr>
+                            <td><code>contracts/</code></td>
+                            <td><strong>Contract Management</strong></td>
+                            <td>Smart contract registry and adapters</td>
+                        </tr>
+                        <tr>
+                            <td><code>control-plane/</code></td>
+                            <td><strong>Enterprise Management</strong></td>
+                            <td>Remote policy and governance</td>
+                        </tr>
+                        <tr>
+                            <td><code>events/</code></td>
+                            <td><strong>Event System</strong></td>
+                            <td>Blockchain event listening</td>
+                        </tr>
+                        <tr>
+                            <td><code>payments/</code></td>
+                            <td><strong>Payment Processing</strong></td>
+                            <td>Multi-provider payment system</td>
+                        </tr>
+                        <tr>
+                            <td><code>policies/</code></td>
+                            <td><strong>Policy Engine</strong></td>
+                            <td>Rule enforcement system</td>
+                        </tr>
+                        <tr>
+                            <td><code>policy-pack/</code></td>
+                            <td><strong>Advanced Policies</strong></td>
+                            <td>Enterprise policy bundles</td>
+                        </tr>
+                        <tr>
+                            <td><code>utils/</code></td>
+                            <td><strong>Utilities</strong></td>
+                            <td>Logging, hashing, helper functions</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <br>
+                <br>
+
+                <h3>🚀 <strong>Version 2 Features</strong> (Advanced Agents in Development):</h3>
+                
+                <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd; background-color: #f8f9fa;"><strong>Agent</strong></th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd; background-color: #f8f9fa;"><strong>What It Is</strong></th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd; background-color: #f8f9fa;"><strong>Purpose</strong></th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd; background-color: #f8f9fa;"><strong>System Component</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Withdrawal Risk Sentinel</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Protective agent monitoring withdrawal patterns</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Prevents sudden, high-risk withdrawals</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><code>policies/</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Settlement Batch Optimizer</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Transaction efficiency agent for batch processing</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Makes multi-leg settlements safer and cheaper</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><code>contracts/</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Portfolio Volatility Governor</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Market-responsive risk parameter adjuster</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Dampens behavior during volatile market periods</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><code>events/</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Compliance & Audit Advisor</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Regulatory compliance agent</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Ensures operations meet institutional standards</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><code>audit/</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Recurring Payment Safety Agent</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Scheduled payment guardian</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Protects recurring and scheduled workflows</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><code>payments/</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Treasury Preservation Agent</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Treasury protection system</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Prevents treasury drain</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><code>policies/</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>User Behavior Pattern Monitor</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Behavioral analysis agent</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Detects anomalous user behavior</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><code>events/</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Multi-Agent Consensus Synthesizer</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Meta-agent aggregating multiple AI decisions</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Combines multiple AI opinions</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><code>control-plane/</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Cost-Efficiency Optimizer</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Gas optimization agent</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Reduces fees and gas waste</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><code>contracts/</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Reputation-Aware Risk Agent</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Trust-based risk assessment system</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Long-term trust scoring</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><code>audit/</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Human-in-the-Loop Approval Agent</strong></td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Hybrid automation system</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;">Enterprise-grade safety with human approval</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #eee;"><code>api/</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <br>
+                
+                <div class="terminology-box" style="margin-left: 40px;">
+                    <h4>📝 <strong>Correct Terminology</strong>:</h4>
+                    <ul>
+                        <li><strong>Agents</strong> = Only the 5 decision-making entities in <code>agents/builtin/</code></li>
+                        <li><strong>System Components</strong> = All other folders that support the SDK infrastructure</li>
+                        <li><strong>Version 2 Features</strong> = Advanced agents planned for future releases</li>
+                        <li><strong>SDK Features</strong> = The complete system including agents + components</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <br><br>
+
+        <section id="data-flow" class="section">
+            <h2>🔄 Level 3: How Data Flows</h2>
+            <div class="card">
+                <p>Here's exactly what happens when someone interacts with your contract:</p>
+                
+                <div class="flow-diagram">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>User deposits 5 tokens</h4>
+                            <p>→ Smart Contract</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Contract emits "Deposited" event</h4>
+                            <p>→ Blockchain</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>SDK catches the event</h4>
+                            <p>→ Event Listener</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>SDK calls RiskMonitor agent</h4>
+                            <p>→ Agent Registry</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Agent analyzes: "5 < 10 threshold"</h4>
+                            <p>→ Agent Logic</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <h4>Agent returns "BLOCK" decision</h4>
+                            <p>→ Policy Engine</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">7</div>
+                        <div class="step-content">
+                            <h4>Policy Engine validates decision</h4>
+                            <p>→ Your App</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">8</div>
+                        <div class="step-content">
+                            <h4>Your app pauses the user</h4>
+                            <p>→ Real Action</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <br><br>
+
+        <section id="agents" class="section">
+            <h2>🧠 Level 4: Understanding Agents</h2>
+            <div class="card">
+                <p>Let's break down how agents actually work:</p>
+                
+                <div class="agent-breakdown">
+                    <div class="agent-part">
+                        <h4>📥 Agent Input (Context)</h4>
+                        <pre><code>const context = {
+  contractId: 'my-vault',     // Which contract
+  user: '0x123...',           // Which user
+  customData: {               // Your specific data
+    balance: 5,               // User has 5 tokens
+    threshold: 10             // Safe minimum is 10
+  }
+};</code></pre>
+                    </div>
+                    
+                    <div class="agent-part">
+                        <h4>⚙️ Agent Processing</h4>
+                        <pre><code>async decide(context) {
+  const { balance, threshold } = context.customData;
+  
+  // Critical risk (25% of threshold)
+  if (balance < threshold * 0.25) {
+    return {
+      action: { type: 'BLOCK', severity: 'CRITICAL' },
+      reason: 'Balance critically low',
+      confidence: 0.95
+    };
+  }
+  
+  // High risk (below threshold)
+  if (balance < threshold) {
+    return {
+      action: { type: 'LIMIT', severity: 'HIGH' },
+      reason: 'Balance below threshold',
+      confidence: 0.85
+    };
+  }
+  
+  // Safe
+  return {
+    action: { type: 'ALLOW', severity: 'LOW' },
+    reason: 'Balance acceptable',
+    confidence: 0.9
+  };
+}</code></pre>
+                    </div>
+                    
+                    <div class="agent-part">
+                        <h4>📤 Agent Output (Decision)</h4>
+                        <pre><code>{
+  action: { type: 'LIMIT', severity: 'HIGH' },
+  reason: 'Balance 5 is below threshold 10',
+  confidence: 0.85,
+  metadata: { /* additional info */ }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="builtin-agents" class="section">
+            <h2>🛠️ Level 5: Built-in Agents Explained</h2>
+            <div class="card">
+                <div class="agents-grid">
+                    <div class="agent-card">
+                        <h4>🛡️ RiskMonitor</h4>
+                        <p><strong>Job:</strong> Protects against risky operations</p>
+                        <div class="agent-example">
+                            <h5>Use case: DeFi vault protection</h5>
+                            <pre><code>const decision = await sdk.executeAgent('risk-monitor', {
+  contractId: 'vault',
+  user: '0x123',
+  customData: {
+    balance: ethers.parseEther('5'),    // User has 5 ETH
+    threshold: ethers.parseEther('10')  // Minimum safe: 10 ETH
+  }
+});
+// Result: LIMIT - balance too low</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="agent-card">
+                        <h4>💧 LiquidityOptimizer</h4>
+                        <p><strong>Job:</strong> Manages liquidity pools</p>
+                        <div class="agent-example">
+                            <h5>Use case: DEX liquidity management</h5>
+                            <pre><code>const decision = await sdk.executeAgent('liquidity-optimizer', {
+  contractId: 'dex',
+  user: '0x456',
+  customData: {
+    currentPrice: ethers.parseEther('100'),
+    liquidity: ethers.parseEther('1000'),
+    targetRatio: 0.8  // Want 80% of optimal liquidity
+  }
+});
+// Result: REMOVE excess liquidity</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="agent-card">
+                        <h4>🚨 EmergencyBrake</h4>
+                        <p><strong>Job:</strong> Stops everything when critical</p>
+                        <div class="agent-example">
+                            <h5>Use case: System overload protection</h5>
+                            <pre><code>const decision = await sdk.executeAgent('emergency-brake', {
+  contractId: 'protocol',
+  user: '0x789',
+  customData: {
+    metric: 95,           // Current system load
+    criticalThreshold: 90 // Max safe load
+  }
+});
+// Result: PAUSE - system overloaded</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="agent-card">
+                        <h4>⚖️ ThresholdGuard</h4>
+                        <p><strong>Job:</strong> Enforces min/max limits</p>
+                        <div class="agent-example">
+                            <h5>Use case: Transaction size limits</h5>
+                            <pre><code>const decision = await sdk.executeAgent('threshold-guard', {
+  contractId: 'exchange',
+  user: '0xabc',
+  customData: {
+    value: ethers.parseEther('150'),    // User wants 150 ETH
+    minThreshold: ethers.parseEther('1'),   // Min: 1 ETH
+    maxThreshold: ethers.parseEther('100')  // Max: 100 ETH
+  }
+});
+// Result: APPROVE with adjusted value of 100 ETH</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="agent-card">
+                        <h4>🔍 AnomalyDetector</h4>
+                        <p><strong>Job:</strong> Finds unusual patterns</p>
+                        <div class="agent-example">
+                            <h5>Use case: Gaming anti-cheat</h5>
+                            <pre><code>const decision = await sdk.executeAgent('anomaly-detector', {
+  contractId: 'game',
+  user: '0xdef',
+  customData: {
+    currentValue: 100,        // Player earned 100 tokens
+    historicalAverage: 50,    // Normal is 50 tokens
+    standardDeviation: 10     // Typical variation
+  }
+});
+// Result: ANOMALY_DETECTED - player earning too much</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="custom-agents" class="section">
+            <h2>🎨 Level 6: Creating Custom Agents</h2>
+            <div class="card">
+                <p>Here's how to build your own agent:</p>
+                
+                <pre><code>class PriceProtectionAgent extends BaseAgent {
+  config = {
+    id: 'price-protection',
+    name: 'Price Protection Agent',
+    description: 'Prevents price manipulation',
+    version: '1.0.0'
+  };
+
+  async decide(context: AgentContext): Promise&lt;AgentDecision&gt; {
+    // Validate required data
+    this.validateContext(context);
+    
+    const { currentPrice, oraclePrice, maxDeviation = 0.1 } = context.customData;
+    
+    if (!currentPrice || !oraclePrice) {
+      throw new Error('Price data required');
+    }
+
+    // Calculate price deviation
+    const deviation = Math.abs(currentPrice - oraclePrice) / oraclePrice;
+
+    if (deviation > maxDeviation) {
+      return {
+        action: { 
+          type: 'REJECT', 
+          severity: 'HIGH',
+          reason: 'Price manipulation detected'
+        },
+        reason: `Price deviates ${(deviation * 100).toFixed(1)}% from oracle`,
+        confidence: 0.95,
+        metadata: { deviation, currentPrice, oraclePrice }
+      };
+    }
+
+    return {
+      action: { 
+        type: 'APPROVE', 
+        severity: 'LOW',
+        reason: 'Price within acceptable range'
+      },
+      reason: `Price deviation ${(deviation * 100).toFixed(1)}% is acceptable`,
+      confidence: 0.9,
+      metadata: { deviation }
+    };
+  }
+}
+
+// Register and use your custom agent
+sdk.registerAgent('price-protection', new PriceProtectionAgent());</code></pre>
+            </div>
+        </section>
+
+        <section id="implementation" class="section">
+            <h2>🚀 Level 7: Real-World Implementation</h2>
+            <div class="card">
+                <p>Let's build a complete DeFi vault protection system:</p>
+                
+                <pre><code>import { CronosAgentSDK, RiskMonitor, EmergencyBrake } from '@cronos/ai-agent-sdk';
+
+async function setupVaultProtection() {
+  // 1. Initialize SDK
+  const sdk = new CronosAgentSDK({
+    network: 'cronos-testnet',
+    rpcUrl: 'https://evm-t3.cronos.org',
+    privateKey: process.env.PRIVATE_KEY
+  });
+
+  // 2. Register your vault contract
+  await sdk.registerContract('vault', {
+    address: '0x123...',
+    abi: vaultABI,
+    network: 'cronos-testnet'
+  });
+
+  // 3. Register protection agents
+  sdk.registerAgent('risk-monitor', new RiskMonitor());
+  sdk.registerAgent('emergency-brake', new EmergencyBrake());
+
+  // 4. Add safety policies
+  sdk.addPolicy({
+    id: 'min-confidence',
+    validate: (decision) => decision.confidence >= 0.8,
+    enforce: (decision) => ({
+      ...decision,
+      confidence: Math.max(decision.confidence, 0.8)
+    })
+  });
+
+  // 5. Set up automatic monitoring
+  sdk.onContractEvent('vault', 'Deposited', async (event) => {
+    console.log(`💰 Deposit: ${event.args.amount} from ${event.args.user}`);
+
+    // Check risk level
+    const riskDecision = await sdk.executeAgent('risk-monitor', {
+      contractId: 'vault',
+      user: event.args.user,
+      customData: {
+        balance: event.args.newBalance,
+        threshold: ethers.parseEther('10')
+      }
+    });
+
+    // Check system health
+    const systemDecision = await sdk.executeAgent('emergency-brake', {
+      contractId: 'vault',
+      user: event.args.user,
+      customData: {
+        metric: await getSystemLoad(),
+        criticalThreshold: 90
+      }
+    });
+
+    // Act on decisions
+    if (riskDecision.action.type === 'BLOCK' || systemDecision.action.type === 'PAUSE') {
+      await pauseUserOperations(event.args.user);
+      console.log('🚨 User operations paused due to risk/system issues');
+    } else if (riskDecision.action.type === 'LIMIT') {
+      await setUserLimits(event.args.user, riskDecision.action.value);
+      console.log('⚠️ User limits adjusted based on risk assessment');
+    }
+  });
+
+  // 6. Start monitoring
+  await sdk.start();
+  console.log('🛡️ Vault protection system active');
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="testing" class="section">
+            <h2>🧪 Level 8: Testing Your Setup</h2>
+            <div class="card">
+                <p>The SDK includes comprehensive testing capabilities for all components:</p>
+                
+                <div class="testing-methods">
+                    <div class="test-method">
+                        <h4>🎯 Quick Agent Testing</h4>
+                        <p>Test individual agents with sample data:</p>
+                        <pre><code># Run the standalone test to see all agents in action
+cd packages/examples/standalone-test
+npm install
+npm test
+
+# Test specific agent
+npm run test:agent risk-monitor</code></pre>
+                    </div>
+                    
+                    <div class="test-method">
+                        <h4>🔧 Unit Testing Framework</h4>
+                        <p>Built-in Jest tests for all components:</p>
+                        <pre><code># Run all tests
+npm test
+
+# Run specific test suites
+npm test -- --testNamePattern="PaymentManager"
+npm test -- --testNamePattern="AgentRegistry"
+npm test -- --testNamePattern="PolicyEngine"
+
+# Run with coverage
+npm test -- --coverage</code></pre>
+                    </div>
+                    
+                    <div class="test-method">
+                        <h4>💳 Payment System Testing</h4>
+                        <p>Test x402 payment integration:</p>
+                        <pre><code>import { PaymentManager, CronosProvider } from '@cronos/ai-agent-sdk';
+
+// Test payment processing
+const paymentManager = new PaymentManager({
+  providers: [new CronosProvider(provider, wallet)],
+  retryConfig: { maxAttempts: 3, baseDelay: 1000, maxDelay: 5000 }
+});
+
+// Test successful payment
+const result = await paymentManager.processPayment({
+  amount: 0.1,
+  currency: 'CRO',
+  recipient: '0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6'
+});
+
+console.log('Payment result:', result.success);
+
+// Test 402 error handling
+try {
+  await sdk.executeAgent('premium-agent', context);
+} catch (error) {
+  if (error.code === 402) {
+    console.log('✅ 402 Payment Required handled correctly');
+  }
+}</code></pre>
+                    </div>
+                    
+                    <div class="test-method">
+                        <h4>🌐 API & Webhook Testing</h4>
+                        <p>Test HTTP endpoints and webhook processing:</p>
+                        <pre><code>import request from 'supertest';
+import { createAPIServer } from '@cronos/ai-agent-sdk';
+
+// Test API endpoints
+const app = await createAPIServer();
+
+// Test agent execution endpoint
+const response = await request(app)
+  .post('/api/agents/execute')
+  .send({
+    agentId: 'risk-monitor',
+    context: {
+      contractId: 'vault',
+      user: '0x123...',
+      customData: { balance: 1000, threshold: 500 }
+    }
+  });
+
+expect(response.status).toBe(200);
+expect(response.body.action).toBeDefined();
+
+// Test webhook processing
+const webhookResponse = await request(app)
+  .post('/api/webhooks/events')
+  .send({
+    contractId: 'vault',
+    eventName: 'Deposited',
+    data: { user: '0x123...', amount: '1000' },
+    blockNumber: 12345,
+    transactionHash: '0xabc...'
+  });
+
+expect(webhookResponse.status).toBe(200);</code></pre>
+                    </div>
+                    
+                    <div class="test-method">
+                        <h4>🏢 Enterprise Feature Testing</h4>
+                        <p>Test control plane and policy pack integration:</p>
+                        <pre><code>import { MockControlPlaneClient, MockPolicyPackVerifier } from '@cronos/ai-agent-sdk';
+
+// Test with mock control plane
+const sdk = new CronosAgentSDK({
+  network: 'cronos-testnet',
+  rpcUrl: 'https://evm-t3.cronos.org',
+  controlPlane: new MockControlPlaneClient(),
+  policyPack: {
+    enabled: true,
+    verifier: new MockPolicyPackVerifier()
+  }
+});
+
+await sdk.start();
+
+// Test policy enforcement
+const decision = await sdk.executeAgent('risk-monitor', context);
+console.log('Policy-enforced decision:', decision);
+
+// Test audit trail
+const auditRecords = sdk.getLocalRecords();
+console.log('Audit records:', auditRecords.length);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="expected-output">
+                    <h4>📊 Expected Test Output:</h4>
+                    <pre><code>🚀 Testing Cronos AI Agent SDK v5.2.0
+
+🧠 Agent Tests:
+1️⃣ RiskMonitor: ✅ LIMIT - Balance below threshold (85% confidence)
+2️⃣ LiquidityOptimizer: ✅ OPTIMIZE - Liquidity adjustment needed (80% confidence)
+3️⃣ EmergencyBrake: ✅ PAUSE - Critical threshold breached (100% confidence)
+4️⃣ ThresholdGuard: ✅ APPROVE - Value adjusted to maximum (90% confidence)
+5️⃣ AnomalyDetector: ✅ ANOMALY_DETECTED - Unusual pattern (95% confidence)
+
+💳 Payment Tests:
+6️⃣ CronosProvider: ✅ Payment processed successfully
+7️⃣ PaymentManager: ✅ Retry mechanism working
+8️⃣ 402 Error Handling: ✅ Payment required detected
+9️⃣ Usage Tracking: ✅ Usage recorded correctly
+
+🌐 API Tests:
+🔟 Agent Execution API: ✅ POST /api/agents/execute
+1️⃣1️⃣ Payment API: ✅ POST /api/payments
+1️⃣2️⃣ Webhook Processing: ✅ POST /api/webhooks/events
+1️⃣3️⃣ Usage API: ✅ GET /api/usage/:userId
+
+🏢 Enterprise Tests:
+1️⃣4️⃣ Control Plane: ✅ Runtime identification
+1️⃣5️⃣ Policy Pack: ✅ Policy enforcement
+1️⃣6️⃣ Audit Trail: ✅ Decision recording
+1️⃣7️⃣ Telemetry: ✅ Event collection
+
+📈 Test Coverage: 95.2%
+⏱️  Total Time: 2.3s
+✅ All 17 test suites passed!</code></pre>
+                </div>
+                
+                <div class="test-scenarios">
+                    <h4>🎭 Real-World Test Scenarios</h4>
+                    <div class="scenario-grid">
+                        <div class="scenario">
+                            <h5>🏦 DeFi Vault Protection</h5>
+                            <pre><code>// Simulate vault deposit attack
+const attackScenario = {
+  contractId: 'vault',
+  user: '0xattacker...',
+  customData: {
+    balance: 1, // Extremely low balance
+    threshold: 1000,
+    depositAmount: 999999 // Huge deposit
+  }
+};
+
+const decision = await sdk.executeAgent('risk-monitor', attackScenario);
+expect(decision.action.type).toBe('BLOCK');
+expect(decision.action.severity).toBe('CRITICAL');</code></pre>
+                        </div>
+                        
+                        <div class="scenario">
+                            <h5>💧 Liquidity Pool Management</h5>
+                            <pre><code>// Test liquidity optimization
+const liquidityScenario = {
+  contractId: 'dex',
+  user: '0xlp-provider...',
+  customData: {
+    currentPrice: 100,
+    liquidity: 50000, // Low liquidity
+    targetRatio: 0.8
+  }
+};
+
+const decision = await sdk.executeAgent('liquidity-optimizer', liquidityScenario);
+expected(decision.action.type).toBe('ADD_LIQUIDITY');</code></pre>
+                        </div>
+                        
+                        <div class="scenario">
+                            <h5>🚨 Emergency Situations</h5>
+                            <pre><code>// Test emergency brake activation
+const emergencyScenario = {
+  contractId: 'protocol',
+  user: '0xsystem...',
+  customData: {
+    metric: 98, // System overload
+    criticalThreshold: 90
+  }
+};
+
+const decision = await sdk.executeAgent('emergency-brake', emergencyScenario);
+expect(decision.action.type).toBe('PAUSE');
+expect(decision.confidence).toBe(1.0);</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="advanced" class="section">
+            <h2>⚡ Level 9: Advanced Features</h2>
+            <div class="card">
+                <div class="advanced-features">
+                    <div class="feature">
+                        <h4>🤖 AI Integration (Optional)</h4>
+                        <pre><code>const sdk = new CronosAgentSDK({
+  network: 'cronos-testnet',
+  rpcUrl: 'https://evm-t3.cronos.org',
+  aiProvider: 'openai',
+  aiApiKey: process.env.OPENAI_API_KEY,
+  aiModel: 'gpt-4'
+});
+
+// Now agents can use AI for more sophisticated decisions
+const aiDecision = await sdk.getAIProvider()?.generateDecision(
+  'Should we allow this high-value transaction?',
+  context
+);</code></pre>
+                    </div>
+                    
+                    <div class="feature">
+                        <h4>📋 Policy Packs (Enterprise)</h4>
+                        <pre><code>// Load policies from a central control plane
+const sdk = new CronosAgentSDK({
+  // ... other config
+  policyPack: {
+    enabled: true,
+    strict: true,  // Fail if policies can't be loaded
+    refreshMs: 60000  // Refresh every minute
+  }
+});</code></pre>
+                    </div>
+                    
+                    <div class="feature">
+                        <h4>📊 Audit Trail</h4>
+                        <pre><code>// Track all decisions for compliance
+const sdk = new CronosAgentSDK({
+  // ... other config
+  audit: {
+    enabled: true,
+    redact: (context) => ({
+      ...context,
+      user: context.user.slice(0, 6) + '...'  // Privacy protection
+    })
+  }
+});
+
+// Get audit records
+const records = sdk.getLocalRecords();
+console.log('Decision history:', records);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="enterprise" class="section">
+            <h2>🏢 Level 9: Enterprise Features</h2>
+            <div class="card">
+                <p>The SDK includes powerful enterprise-grade features for large-scale deployments:</p>
+                
+                <div class="enterprise-features">
+                    <div class="feature">
+                        <h4>🏢 Control Plane Integration</h4>
+                        <p>Centralized management system for distributed agent deployments:</p>
+                        <pre><code>// Connect to enterprise control plane
+const sdk = new CronosAgentSDK({
+  network: 'cronos-mainnet',
+  rpcUrl: process.env.CRONOS_RPC_URL,
+  controlPlane: new EnterpriseControlPlaneClient({
+    endpoint: 'https://control-plane.yourcompany.com',
+    apiKey: process.env.CONTROL_PLANE_API_KEY
+  }),
+  runtime: {
+    appName: 'trading-bot',
+    env: 'production',
+    version: '2.1.0'
+  }
+});
+
+// Automatic runtime identification and policy sync
+await sdk.start();
+console.log('Runtime ID:', sdk.getRuntimeId());</code></pre>
+                    </div>
+                    
+                    <div class="feature">
+                        <h4>📋 Dynamic Policy Packs</h4>
+                        <p>Centrally managed policies that update in real-time:</p>
+                        <pre><code>// Policy pack with cryptographic verification
+const sdk = new CronosAgentSDK({
+  // ... other config
+  policyPack: {
+    enabled: true,
+    strict: true,  // Fail if policies can't be verified
+    verifier: new CryptographicPolicyPackVerifier({
+      publicKey: process.env.POLICY_PUBLIC_KEY
+    }),
+    refreshMs: 60000  // Check for updates every minute
+  }
+});
+
+// Policies are automatically applied to all agent decisions
+// Example policy pack rules:
+{
+  "packVersion": "1.2.3",
+  "rulesets": [
+    {
+      "id": "risk-limits",
+      "scope": "global",
+      "priority": 100,
+      "rules": [
+        {
+          "type": "clamp",
+          "field": "confidence",
+          "min": 0.7,
+          "max": 1.0
+        },
+        {
+          "type": "denyIf",
+          "field": "action.severity",
+          "op": "==",
+          "value": "CRITICAL"
+        }
+      ]
+    }
+  ]
+}</code></pre>
+                    </div>
+                    
+                    <div class="feature">
+                        <h4>📈 Real-time Telemetry</h4>
+                        <p>Comprehensive monitoring and analytics:</p>
+                        <pre><code>// Automatic telemetry collection
+const sdk = new CronosAgentSDK({
+  // ... other config
+  telemetry: {
+    enabled: true,
+    endpoint: 'https://telemetry.yourcompany.com',
+    batchSize: 100,
+    flushInterval: 30000
+  }
+});
+
+// Custom telemetry events
+await sdk.pushTelemetry({
+  type: 'agent_performance',
+  timestamp: Date.now(),
+  data: {
+    agentId: 'risk-monitor',
+    executionTime: 45,
+    memoryUsage: process.memoryUsage().heapUsed
+  }
+});</code></pre>
+                    </div>
+                    
+                    <div class="feature">
+                        <h4>🔐 Audit & Compliance</h4>
+                        <p>Complete audit trail with privacy protection:</p>
+                        <pre><code>// Enterprise audit configuration
+const sdk = new CronosAgentSDK({
+  // ... other config
+  audit: {
+    enabled: true,
+    retention: 90, // days
+    encryption: true,
+    redact: (context) => ({
+      ...context,
+      user: hashUser(context.user), // Hash PII
+      customData: {
+        ...context.customData,
+        sensitiveField: '[REDACTED]'
+      }
+    })
+  }
+});
+
+// Query audit records
+const records = await sdk.getAuditRecords({
+  agentId: 'risk-monitor',
+  startDate: '2024-01-01',
+  endDate: '2024-01-31'
+});</code></pre>
+                    </div>
+                    
+                    <div class="feature">
+                        <h4>🔧 Contract Adapter System</h4>
+                        <p>Direct smart contract interaction capabilities:</p>
+                        <pre><code>// Register contract with adapter
+await sdk.registerContract('vault', {
+  address: '0x123...',
+  abi: vaultABI,
+  network: 'cronos-mainnet'
+});
+
+// Direct contract calls through adapter
+const adapter = sdk.getContractAdapter('vault');
+const balance = await adapter.call('balanceOf', userAddress);
+const totalSupply = await adapter.call('totalSupply');
+
+// Use in agent decisions
+const decision = await sdk.executeAgent('risk-monitor', {
+  contractId: 'vault',
+  user: userAddress,
+  customData: {
+    balance,
+    totalSupply,
+    utilizationRatio: balance / totalSupply
+  }
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ui-components" class="section">
+            <h2>🎛️ Level 10: UI Dashboard Components</h2>
+            <div class="card">
+                <p>The SDK includes a complete React UI package for building management dashboards:</p>
+                
+                <div class="ui-features">
+                    <div class="ui-component">
+                        <h4>📋 Dashboard Component</h4>
+                        <p>Real-time overview of all agents and system status:</p>
+                        <pre><code>import { Dashboard, useAgentSDK } from '@cronos/ai-agent-ui';
+
+function App() {
+  const { sdk, isReady } = useAgentSDK({
+    network: 'cronos-testnet',
+    rpcUrl: 'https://evm-t3.cronos.org',
+    controlPlane: new DemoControlPlaneClient()
+  });
+
+  if (!isReady) return <div>Loading...</div>;
+
+  return (
+    <div>
+      <h1>AI Agent Control Center</h1>
+      <Dashboard sdk={sdk} />
+    </div>
+  );
+}</code></pre>
+                    </div>
+                    
+                    <div class="ui-component">
+                        <h4>🖥️ Agent Console</h4>
+                        <p>Interactive console for testing agents:</p>
+                        <pre><code>import { AgentConsole } from '@cronos/ai-agent-ui';
+
+// Interactive agent testing interface
+<AgentConsole 
+  sdk={sdk} 
+  onAgentExecute={(agentId, context, result) => {
+    console.log(`Agent ${agentId} executed:`, result);
+  }}
+/></code></pre>
+                    </div>
+                    
+                    <div class="ui-component">
+                        <h4>📊 Event Monitor</h4>
+                        <p>Real-time blockchain event monitoring:</p>
+                        <pre><code>import { EventMonitor } from '@cronos/ai-agent-ui';
+
+// Live event stream with filtering
+<EventMonitor 
+  sdk={sdk}
+  maxEvents={100}
+  filters={{
+    contractId: 'vault',
+    eventName: 'Deposited'
+  }}
+/></code></pre>
+                    </div>
+                    
+                    <div class="ui-component">
+                        <h4>📁 Contract Registry</h4>
+                        <p>Manage registered contracts:</p>
+                        <pre><code>import { ContractRegistry } from '@cronos/ai-agent-ui';
+
+// Contract management interface
+<ContractRegistry 
+  sdk={sdk}
+  onContractAdd={(id, config) => {
+    console.log(`Contract ${id} registered`);
+  }}
+/></code></pre>
+                    </div>
+                    
+                    <div class="ui-component">
+                        <h4>⚙️ Policy Manager</h4>
+                        <p>Visual policy configuration:</p>
+                        <pre><code>import { PolicyManager } from '@cronos/ai-agent-ui';
+
+// Policy pack visualization and management
+<PolicyManager 
+  sdk={sdk}
+  showPolicyPack={true}
+  allowEditing={false} // Read-only in production
+/></code></pre>
+                    </div>
+                </div>
+                
+                <div class="ui-demo">
+                    <h4>🎆 Complete Dashboard Example</h4>
+                    <pre><code>import React from 'react';
+import { 
+  Dashboard, 
+  AgentConsole, 
+  EventMonitor, 
+  ContractRegistry, 
+  PolicyManager,
+  useAgentSDK 
+} from '@cronos/ai-agent-ui';
+import { RiskMonitor, LiquidityOptimizer } from '@cronos/ai-agent-sdk';
+
+function CronosAgentDashboard() {
+  const { sdk, isReady } = useAgentSDK({
+    network: 'cronos-mainnet',
+    rpcUrl: process.env.REACT_APP_CRONOS_RPC,
+    controlPlane: new EnterpriseControlPlaneClient({
+      endpoint: process.env.REACT_APP_CONTROL_PLANE_URL
+    }),
+    policyPack: { enabled: true },
+    audit: { enabled: true }
+  });
+
+  React.useEffect(() => {
+    if (sdk && isReady) {
+      // Register agents
+      sdk.registerAgent('risk-monitor', new RiskMonitor());
+      sdk.registerAgent('liquidity-optimizer', new LiquidityOptimizer());
+      
+      // Register contracts
+      sdk.registerContract('main-vault', {
+        address: '0x123...',
+        abi: vaultABI,
+        network: 'cronos-mainnet'
+      });
+    }
+  }, [sdk, isReady]);
+
+  if (!isReady) {
+    return <LoadingScreen />;
+  }
+
+  return (
+    <div className="dashboard-layout">
+      <header>
+        <h1>Cronos AI Agent Control Center</h1>
+        <div className="status">
+          Runtime: {sdk.getRuntimeId()}
+          Policy Version: {sdk.getPolicyVersion()}
+        </div>
+      </header>
+      
+      <main>
+        <Dashboard sdk={sdk} />
+        
+        <div className="grid-2x2">
+          <AgentConsole sdk={sdk} />
+          <EventMonitor sdk={sdk} />
+          <ContractRegistry sdk={sdk} />
+          <PolicyManager sdk={sdk} />
+        </div>
+      </main>
+    </div>
+  );
+}
+
+export default CronosAgentDashboard;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="x402-payments" class="section">
+            <h2>💳 Level 11: x402 Payment Integration</h2>
+            <div class="card">
+                <p>The SDK supports HTTP 402 "Payment Required" standard for micropayments and usage-based billing of AI agent services:</p>
+                
+                <div class="x402-overview">
+                    <div class="payment-concept">
+                        <h4>📊 What is x402?</h4>
+                        <p>HTTP 402 is a status code reserved for future micropayment systems. In the Cronos AI Agent SDK, we implement x402 for:</p>
+                        <ul>
+                            <li><strong>Pay-per-decision:</strong> Charge for each agent execution</li>
+                            <li><strong>Tiered access:</strong> Premium agents require payment</li>
+                            <li><strong>Usage metering:</strong> Track and bill computational resources</li>
+                            <li><strong>Micropayments:</strong> Crypto-native payment flows</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="x402-features">
+                    <div class="payment-feature">
+                        <h4>💰 Pay-per-Decision Model</h4>
+                        <p>Implement usage-based pricing for AI agent decisions:</p>
+                        <pre><code>import { CronosAgentSDK, X402PaymentProvider } from '@cronos/ai-agent-sdk';
+
+// Configure SDK with x402 payment provider
+const sdk = new CronosAgentSDK({
+  network: 'cronos-mainnet',
+  rpcUrl: process.env.CRONOS_RPC_URL,
+  paymentProvider: new X402PaymentProvider({
+    walletAddress: '0x123...',
+    pricePerDecision: '0.001', // 0.001 CRO per decision
+    acceptedTokens: ['CRO', 'USDC', 'USDT'],
+    paymentTimeout: 30000 // 30 seconds
+  })
+});
+
+// Register premium agent with payment requirement
+sdk.registerAgent('premium-risk-analyzer', new PremiumRiskAnalyzer(), {
+  requiresPayment: true,
+  priceOverride: '0.005' // Premium pricing
+});
+
+// Execute agent with automatic payment handling
+try {
+  const decision = await sdk.executeAgent('premium-risk-analyzer', {
+    contractId: 'vault',
+    user: '0xabc...',
+    customData: { balance: 1000, threshold: 500 }
+  });
+  console.log('Decision received:', decision);
+} catch (error) {
+  if (error.code === 402) {
+    console.log('Payment required:', error.paymentDetails);
+    // Handle payment flow
+  }
+}</code></pre>
+                    </div>
+                    
+                    <div class="payment-feature">
+                        <h4>🔒 Payment Gateway Integration</h4>
+                        <p>Seamless integration with crypto payment systems:</p>
+                        <pre><code>// Custom payment handler
+class CronosPaymentHandler {
+  async handlePayment(paymentRequest) {
+    const { amount, token, recipient, metadata } = paymentRequest;
+    
+    // Create payment transaction
+    const tx = await this.wallet.sendTransaction({
+      to: recipient,
+      value: ethers.parseEther(amount),
+      data: ethers.utils.hexlify(ethers.utils.toUtf8Bytes(metadata.requestId))
+    });
+    
+    // Wait for confirmation
+    const receipt = await tx.wait();
+    
+    return {
+      transactionHash: receipt.transactionHash,
+      blockNumber: receipt.blockNumber,
+      status: 'confirmed'
+    };
+  }
+}
+
+// Register payment handler
+sdk.setPaymentHandler(new CronosPaymentHandler());
+
+// Agent execution with payment flow
+sdk.onPaymentRequired(async (paymentRequest) => {
+  console.log('Payment required for agent execution:');
+  console.log(`Amount: ${paymentRequest.amount} ${paymentRequest.token}`);
+  console.log(`Agent: ${paymentRequest.agentId}`);
+  
+  // Show payment UI or auto-pay
+  const confirmed = await showPaymentDialog(paymentRequest);
+  if (confirmed) {
+    return await sdk.processPayment(paymentRequest);
+  }
+  throw new Error('Payment cancelled by user');
+});</code></pre>
+                    </div>
+                    
+                    <div class="payment-feature">
+                        <h4>📈 Usage Metering & Analytics</h4>
+                        <p>Track usage and generate billing reports:</p>
+                        <pre><code>// Usage tracking configuration
+const sdk = new CronosAgentSDK({
+  // ... other config
+  usageTracking: {
+    enabled: true,
+    granularity: 'per-decision', // or 'per-hour', 'per-day'
+    billing: {
+      currency: 'CRO',
+      rates: {
+        'risk-monitor': '0.001',
+        'liquidity-optimizer': '0.002',
+        'premium-risk-analyzer': '0.005'
+      }
+    }
+  }
+});
+
+// Get usage statistics
+const usage = await sdk.getUsageStats({
+  startDate: '2024-01-01',
+  endDate: '2024-01-31',
+  groupBy: 'agent'
+});
+
+console.log('Usage Report:', {
+  totalDecisions: usage.totalDecisions,
+  totalCost: usage.totalCost,
+  breakdown: usage.agentBreakdown
+});
+
+// Generate invoice
+const invoice = await sdk.generateInvoice({
+  period: '2024-01',
+  format: 'pdf',
+  includeDetails: true
+});</code></pre>
+                    </div>
+                    
+                    <div class="payment-feature">
+                        <h4>🌐 Web3 Payment Flows</h4>
+                        <p>Native blockchain payment integration:</p>
+                        <pre><code>// Web3 payment provider with smart contract integration
+class Web3PaymentProvider extends X402PaymentProvider {
+  constructor(config) {
+    super(config);
+    this.paymentContract = new ethers.Contract(
+      config.paymentContractAddress,
+      paymentABI,
+      config.wallet
+    );
+  }
+  
+  async createPaymentRequest(agentId, amount, metadata) {
+    // Create on-chain payment request
+    const tx = await this.paymentContract.createPaymentRequest(
+      agentId,
+      ethers.parseEther(amount),
+      metadata.requestId,
+      metadata.expiresAt
+    );
+    
+    const receipt = await tx.wait();
+    const requestId = receipt.logs[0].args.requestId;
+    
+    return {
+      requestId,
+      amount,
+      token: 'CRO',
+      recipient: this.paymentContract.address,
+      metadata: {
+        ...metadata,
+        contractRequestId: requestId
+      },
+      paymentUrl: `cronos://pay/${requestId}`,
+      qrCode: await this.generateQRCode(`cronos://pay/${requestId}`)
+    };
+  }
+  
+  async verifyPayment(requestId) {
+    const payment = await this.paymentContract.getPayment(requestId);
+    return {
+      paid: payment.status === 'completed',
+      transactionHash: payment.txHash,
+      timestamp: payment.paidAt
+    };
+  }
+}
+
+// Usage with subscription model
+const sdk = new CronosAgentSDK({
+  // ... other config
+  paymentProvider: new Web3PaymentProvider({
+    paymentContractAddress: '0x456...',
+    wallet: wallet,
+    subscriptionPlans: {
+      'basic': { price: '10', decisions: 1000 },
+      'premium': { price: '50', decisions: 10000 },
+      'enterprise': { price: '200', decisions: 'unlimited' }
+    }
+  })
+});</code></pre>
+                    </div>
+                    
+                    <div class="payment-feature">
+                        <h4>📱 Mobile Payment Integration</h4>
+                        <p>Mobile-first payment experiences:</p>
+                        <pre><code>// React Native integration
+import { CronosAgentSDK, MobilePaymentProvider } from '@cronos/ai-agent-sdk-mobile';
+import { WalletConnect } from '@walletconnect/react-native';
+
+const MobileAgentApp = () => {
+  const [sdk, setSdk] = useState(null);
+  
+  useEffect(() => {
+    const initSDK = async () => {
+      const mobileSDK = new CronosAgentSDK({
+        network: 'cronos-mainnet',
+        rpcUrl: 'https://evm.cronos.org',
+        paymentProvider: new MobilePaymentProvider({
+          walletConnect: new WalletConnect({
+            bridge: 'https://bridge.walletconnect.org',
+            clientMeta: {
+              name: 'Cronos AI Agent',
+              description: 'AI-powered DeFi automation',
+              url: 'https://cronos.org',
+              icons: ['https://cronos.org/icon.png']
+            }
+          }),
+          supportedWallets: ['metamask', 'crypto.com', 'trust'],
+          paymentMethods: ['wallet', 'apple-pay', 'google-pay']
+        })
+      });
+      
+      setSdk(mobileSDK);
+    };
+    
+    initSDK();
+  }, []);
+  
+  const executeAgentWithPayment = async (agentId, context) => {
+    try {
+      const decision = await sdk.executeAgent(agentId, context);
+      return decision;
+    } catch (error) {
+      if (error.code === 402) {
+        // Show native payment sheet
+        const paymentResult = await showPaymentSheet({
+          amount: error.paymentDetails.amount,
+          currency: error.paymentDetails.token,
+          description: `AI Agent: ${agentId}`,
+          merchantId: 'cronos.ai.agents'
+        });
+        
+        if (paymentResult.success) {
+          // Retry agent execution
+          return await sdk.executeAgent(agentId, context);
+        }
+      }
+      throw error;
+    }
+  };
+  
+  return (
+    <View>
+      <PaymentStatusBar sdk={sdk} />
+      <AgentExecutionPanel onExecute={executeAgentWithPayment} />
+    </View>
+  );
+};</code></pre>
+                    </div>
+                    
+                    <div class="payment-feature">
+                        <h4>📄 Enterprise Billing Integration</h4>
+                        <p>Integration with enterprise billing systems:</p>
+                        <pre><code>// Enterprise billing provider
+class EnterpriseBillingProvider extends X402PaymentProvider {
+  constructor(config) {
+    super(config);
+    this.billingAPI = new BillingAPI(config.apiKey);
+    this.accountId = config.accountId;
+  }
+  
+  async recordUsage(agentId, context, decision) {
+    const usageRecord = {
+      timestamp: Date.now(),
+      accountId: this.accountId,
+      serviceId: agentId,
+      quantity: 1,
+      unitPrice: this.getAgentPrice(agentId),
+      metadata: {
+        contractId: context.contractId,
+        user: context.user,
+        confidence: decision.confidence,
+        executionTime: decision.metadata?.executionTime
+      }
+    };
+    
+    await this.billingAPI.recordUsage(usageRecord);
+  }
+  
+  async generateMonthlyInvoice(month, year) {
+    const usage = await this.billingAPI.getUsage({
+      accountId: this.accountId,
+      month,
+      year
+    });
+    
+    return {
+      invoiceId: usage.invoiceId,
+      totalAmount: usage.totalAmount,
+      currency: 'USD',
+      lineItems: usage.services.map(service => ({
+        description: `AI Agent: ${service.serviceId}`,
+        quantity: service.totalUsage,
+        unitPrice: service.unitPrice,
+        amount: service.totalAmount
+      })),
+      paymentDue: new Date(year, month + 1, 15), // 15th of next month
+      downloadUrl: usage.invoiceUrl
+    };
+  }
+}
+
+// Usage with enterprise features
+const sdk = new CronosAgentSDK({
+  // ... other config
+  paymentProvider: new EnterpriseBillingProvider({
+    apiKey: process.env.BILLING_API_KEY,
+    accountId: process.env.ACCOUNT_ID,
+    billingCycle: 'monthly',
+    paymentTerms: 'net-30'
+  }),
+  audit: {
+    enabled: true,
+    includeBilling: true
+  }
+});</code></pre>
+                    </div>
+                </div>
+                
+                <div class="x402-benefits">
+                    <h4>🎆 x402 Payment Benefits</h4>
+                    <div class="benefits-grid">
+                        <div class="benefit">
+                            <h5>💰 Monetization</h5>
+                            <p>Turn AI agents into revenue streams with pay-per-use pricing</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>⚡ Micropayments</h5>
+                            <p>Enable tiny payments for individual agent decisions</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>📈 Usage Analytics</h5>
+                            <p>Detailed insights into agent usage and revenue</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>🌐 Web3 Native</h5>
+                            <p>Seamless integration with blockchain payment systems</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>📱 Mobile Ready</h5>
+                            <p>Native mobile payment experiences</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>🏢 Enterprise</h5>
+                            <p>Integration with existing billing and accounting systems</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="webhooks" class="section">
+            <h2>🔗 Level 12: Webhooks & HTTP API</h2>
+            <div class="card">
+                <p>The SDK provides a complete HTTP API system for remote access and webhook integration:</p>
+                
+                <div class="webhook-features">
+                    <div class="webhook-feature">
+                        <h4>🌐 HTTP API Server</h4>
+                        <p>Expose SDK functionality via REST endpoints:</p>
+                        <pre><code>import express from 'express';
+import { CronosAgentSDK, ExpressAdapter } from '@cronos/ai-agent-sdk';
+
+const app = express();
+const sdk = new CronosAgentSDK({
+  network: 'cronos-mainnet',
+  rpcUrl: process.env.CRONOS_RPC_URL
+});
+
+// Execute agents via HTTP
+app.post('/api/agents/execute', async (req, res) => {
+  try {
+    const { agentId, context } = req.body;
+    const decision = await sdk.executeAgent(agentId, context);
+    res.json(decision);
+  } catch (error) {
+    if (error.message.includes('Payment required')) {
+      res.status(402).json({ error: 'Payment required' });
+    } else {
+      res.status(500).json({ error: error.message });
+    }
+  }
+});
+
+// Process payments via HTTP
+app.post('/api/payments', async (req, res) => {
+  const { amount, currency, recipient } = req.body;
+  const result = await sdk.processPayment(amount, currency, recipient);
+  res.status(result.success ? 200 : 402).json(result);
+});
+
+app.listen(3000);</code></pre>
+                    </div>
+                    
+                    <div class="webhook-feature">
+                        <h4>🔔 Blockchain Webhooks</h4>
+                        <p>Receive and process blockchain events automatically:</p>
+                        <pre><code>import { WebhookHandler } from '@cronos/ai-agent-sdk';
+
+const webhookHandler = new WebhookHandler(sdk);
+
+// Webhook endpoint for blockchain events
+app.post('/api/webhooks/events', async (req, res) => {
+  try {
+    const event = {
+      contractId: req.body.contractId,
+      eventName: req.body.eventName,
+      data: req.body.data,
+      blockNumber: req.body.blockNumber,
+      transactionHash: req.body.transactionHash
+    };
+    
+    await webhookHandler.processEvent(event);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Webhook processing failed' });
+  }
+});
+
+// Example webhook payload from blockchain indexer:
+{
+  "contractId": "vault",
+  "eventName": "Deposited",
+  "data": {
+    "user": "0x123...",
+    "amount": "1000000000000000000",
+    "newBalance": "5000000000000000000"
+  },
+  "blockNumber": 12345678,
+  "transactionHash": "0xabc..."
+}</code></pre>
+                    </div>
+                    
+                    <div class="webhook-feature">
+                        <h4>📊 Usage Tracking API</h4>
+                        <p>Monitor and bill agent usage via REST endpoints:</p>
+                        <pre><code>// Get user usage statistics
+app.get('/api/usage/:userId', (req, res) => {
+  const tracker = sdk.getUsageTracker();
+  if (!tracker) {
+    return res.status(404).json({ error: 'Usage tracking not enabled' });
+  }
+  
+  const usage = tracker.getUsage(req.params.userId);
+  const totalCost = tracker.getTotalUsage(req.params.userId, 'USD');
+  
+  res.json({
+    records: usage,
+    totalCost,
+    currency: 'USD'
+  });
+});
+
+// Track usage programmatically
+app.post('/api/usage/track', (req, res) => {
+  const { userId, service, amount, currency } = req.body;
+  sdk.trackUsage(userId, service, amount, currency);
+  res.json({ success: true });
+});</code></pre>
+                    </div>
+                    
+                    <div class="webhook-feature">
+                        <h4>🔄 Event-Driven Automation</h4>
+                        <p>Automatic agent execution based on blockchain events:</p>
+                        <pre><code>// Webhook handler automatically maps events to agents
+class SmartWebhookHandler extends WebhookHandler {
+  getRelevantAgents(event) {
+    switch (event.eventName) {
+      case 'Deposited':
+      case 'Withdrawn':
+        return ['risk-monitor', 'threshold-guard'];
+      
+      case 'LiquidityAdded':
+      case 'LiquidityRemoved':
+        return ['liquidity-optimizer'];
+      
+      case 'EmergencyStop':
+        return ['emergency-brake'];
+      
+      case 'PriceUpdate':
+        return ['anomaly-detector'];
+      
+      default:
+        return ['anomaly-detector'];
+    }
+  }
+}
+
+// Process events and execute agents automatically
+const handler = new SmartWebhookHandler(sdk);
+app.post('/webhooks/blockchain', handler.createWebhookEndpoint());</code></pre>
+                    </div>
+                    
+                    <div class="webhook-feature">
+                        <h4>🚀 Complete API Example</h4>
+                        <p>Full-featured API server with all endpoints:</p>
+                        <pre><code>import { createAPIServer } from '@cronos/ai-agent-sdk';
+
+// One-line API server setup
+const server = await createAPIServer();
+
+// Available endpoints:
+// POST /api/agents/execute     - Execute agents
+// GET  /api/agents            - List agents
+// POST /api/contracts         - Register contracts
+// GET  /api/contracts         - List contracts
+// POST /api/payments          - Process payments
+// GET  /api/usage/:userId     - Get usage stats
+// POST /api/webhooks/events   - Receive blockchain events
+
+// Example client usage:
+const response = await fetch('http://localhost:3000/api/agents/execute', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    agentId: 'risk-monitor',
+    context: {
+      contractId: 'vault',
+      user: '0x123...',
+      customData: {
+        balance: 1000,
+        threshold: 500
+      }
+    }
+  })
+});
+
+const decision = await response.json();
+console.log('Agent decision:', decision);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="webhook-benefits">
+                    <h4>🎆 Webhook & API Benefits</h4>
+                    <div class="benefits-grid">
+                        <div class="benefit">
+                            <h5>🌐 Remote Access</h5>
+                            <p>Execute agents from any application via HTTP</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>🔔 Real-time Events</h5>
+                            <p>Automatic processing of blockchain events</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>📊 Usage Monitoring</h5>
+                            <p>Track and bill agent usage via REST API</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>🔄 Event Automation</h5>
+                            <p>Automatic agent execution based on events</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>💳 Payment Integration</h5>
+                            <p>HTTP 402 payment flows for agent services</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>🚀 Easy Integration</h5>
+                            <p>Simple REST API for any programming language</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="auditing" class="section">
+            <h2>📈 Level 13: Auditing & Compliance</h2>
+            <div class="card">
+                <p>The SDK provides comprehensive auditing capabilities for regulatory compliance and security monitoring:</p>
+                
+                <div class="audit-features">
+                    <div class="audit-feature">
+                        <h4>📄 Decision Audit Trail</h4>
+                        <p>Track every agent decision with complete context:</p>
+                        <pre><code>const sdk = new CronosAgentSDK({
+  network: 'cronos-mainnet',
+  rpcUrl: process.env.CRONOS_RPC_URL,
+  audit: {
+    enabled: true,
+    retention: 90, // days
+    redact: (context) => ({
+      ...context,
+      user: hashUser(context.user), // Hash PII
+      customData: {
+        ...context.customData,
+        sensitiveField: '[REDACTED]'
+      }
+    })
+  }
+});
+
+// Every agent execution is automatically audited
+const decision = await sdk.executeAgent('risk-monitor', context);
+
+// Retrieve audit records
+const records = sdk.getLocalRecords();
+console.log('Audit trail:', records);</code></pre>
+                    </div>
+                    
+                    <div class="audit-feature">
+                        <h4>🔒 Privacy Protection</h4>
+                        <p>Automatic PII redaction and data anonymization:</p>
+                        <pre><code>// Custom redaction function
+const auditConfig = {
+  enabled: true,
+  redact: (context) => {
+    return {
+      contractId: context.contractId,
+      user: context.user.slice(0, 6) + '...', // Partial address
+      timestamp: context.timestamp,
+      customData: {
+        // Remove sensitive fields
+        balance: '[REDACTED]',
+        // Keep non-sensitive data
+        action: context.customData.action,
+        confidence: context.customData.confidence
+      }
+    };
+  }
+};
+
+// Audit record example (redacted)
+{
+  "id": "audit_1234567890",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "agentId": "risk-monitor",
+  "context": {
+    "contractId": "vault",
+    "user": "0x123...",
+    "customData": {
+      "balance": "[REDACTED]",
+      "action": "LIMIT"
+    }
+  },
+  "decision": {
+    "action": { "type": "LIMIT", "severity": "HIGH" },
+    "confidence": 0.85
+  }
+}</code></pre>
+                    </div>
+                    
+                    <div class="audit-feature">
+                        <h4>📊 Compliance Reporting</h4>
+                        <p>Generate compliance reports for regulators:</p>
+                        <pre><code>// Generate compliance report
+const complianceReport = {
+  period: '2024-Q1',
+  totalDecisions: 15420,
+  agentBreakdown: {
+    'risk-monitor': { decisions: 8500, blocked: 127 },
+    'liquidity-optimizer': { decisions: 4200, optimized: 890 },
+    'emergency-brake': { decisions: 2720, paused: 15 }
+  },
+  policyViolations: 3,
+  averageConfidence: 0.87,
+  complianceScore: 99.8
+};
+
+// Export audit data for external systems
+const auditExport = await sdk.exportAuditData({
+  startDate: '2024-01-01',
+  endDate: '2024-03-31',
+  format: 'csv', // or 'json', 'xml'
+  includeRedacted: false
+});
+
+// Compliance dashboard data
+const dashboardData = {
+  riskDecisions: {
+    total: 8500,
+    blocked: 127,
+    limited: 1250,
+    approved: 7123
+  },
+  policyEnforcement: {
+    totalPolicies: 12,
+    violations: 3,
+    enforcementRate: 99.96
+  },
+  auditCoverage: {
+    recordedDecisions: 15420,
+    totalDecisions: 15420,
+    coverage: 100
+  }
+};</code></pre>
+                    </div>
+                    
+                    <div class="audit-feature">
+                        <h4>🔍 Forensic Analysis</h4>
+                        <p>Investigate incidents with detailed audit trails:</p>
+                        <pre><code>// Investigate security incident
+const incident = await sdk.investigateIncident({
+  timeRange: {
+    start: '2024-01-15T09:00:00Z',
+    end: '2024-01-15T11:00:00Z'
+  },
+  filters: {
+    agentId: 'risk-monitor',
+    action: 'BLOCK',
+    severity: 'CRITICAL'
+  }
+});
+
+// Incident analysis result
+{
+  "incidentId": "INC-2024-001",
+  "summary": {
+    "totalDecisions": 45,
+    "blockedTransactions": 12,
+    "affectedUsers": 8,
+    "potentialLoss": "$125,000"
+  },
+  "timeline": [
+    {
+      "timestamp": "09:15:23Z",
+      "event": "Anomaly detected in user 0x123...",
+      "agent": "anomaly-detector",
+      "action": "FLAG"
+    },
+    {
+      "timestamp": "09:15:45Z",
+      "event": "Risk threshold exceeded",
+      "agent": "risk-monitor",
+      "action": "BLOCK"
+    }
+  ],
+  "recommendations": [
+    "Adjust risk thresholds for similar patterns",
+    "Implement additional monitoring for user 0x123..."
+  ]
+}</code></pre>
+                    </div>
+                    
+                    <div class="audit-feature">
+                        <h4>🏢 Enterprise Audit Integration</h4>
+                        <p>Integration with enterprise audit and SIEM systems:</p>
+                        <pre><code>// SIEM integration
+const siemConfig = {
+  endpoint: 'https://siem.company.com/api/events',
+  apiKey: process.env.SIEM_API_KEY,
+  format: 'cef', // Common Event Format
+  realtime: true
+};
+
+// Audit event forwarding
+sdk.onAuditEvent((record) => {
+  // Forward to SIEM system
+  const cefEvent = {
+    timestamp: record.timestamp,
+    severity: mapSeverity(record.decision.action.severity),
+    sourceUserId: record.context.user,
+    deviceAction: record.decision.action.type,
+    applicationProtocol: 'cronos-ai-agent',
+    message: `Agent ${record.agentId}: ${record.decision.reason}`
+  };
+  
+  forwardToSIEM(cefEvent);
+});
+
+// Compliance dashboard integration
+const complianceAPI = {
+  endpoint: 'https://compliance.company.com/api',
+  schedule: '0 0 * * *', // Daily at midnight
+  reports: ['decisions', 'violations', 'performance']
+};
+
+// Automated compliance reporting
+setInterval(async () => {
+  const report = await generateComplianceReport();
+  await submitToComplianceSystem(report);
+}, 24 * 60 * 60 * 1000); // Daily</code></pre>
+                    </div>
+                </div>
+                
+                <div class="audit-benefits">
+                    <h4>🎆 Auditing Benefits</h4>
+                    <div class="benefits-grid">
+                        <div class="benefit">
+                            <h5>📄 Complete Trail</h5>
+                            <p>Every decision tracked with full context</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>🔒 Privacy Protected</h5>
+                            <p>Automatic PII redaction and anonymization</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>📊 Compliance Ready</h5>
+                            <p>Regulatory reporting and compliance dashboards</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>🔍 Forensic Analysis</h5>
+                            <p>Incident investigation and root cause analysis</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>🏢 Enterprise Integration</h5>
+                            <p>SIEM and compliance system integration</p>
+                        </div>
+                        <div class="benefit">
+                            <h5>⚙️ Automated Reporting</h5>
+                            <p>Scheduled compliance and audit reports</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="production" class="section">
+            <h2>🏆 Level 10: Production Deployment</h2>
+            <div class="card">
+                <div class="production-setup">
+                    <div class="setup-step">
+                        <h4>🔧 Environment Setup</h4>
+                        <pre><code># Install the SDK
+npm install @cronos/ai-agent-sdk
+
+# Set environment variables
+export CRONOS_RPC_URL="https://evm.cronos.org"
+export AGENT_PRIVATE_KEY="your-private-key"
+export OPENAI_API_KEY="your-openai-key"  # Optional</code></pre>
+                    </div>
+                    
+                    <div class="setup-step">
+                        <h4>⚙️ Production Configuration</h4>
+                        <pre><code>const sdk = new CronosAgentSDK({
+  network: 'cronos-mainnet',
+  rpcUrl: process.env.CRONOS_RPC_URL,
+  privateKey: process.env.AGENT_PRIVATE_KEY,
+  logLevel: LogLevel.WARN,  // Reduce noise in production
+  audit: { enabled: true },
+  policyPack: { 
+    enabled: true,
+    strict: true,
+    refreshMs: 300000  // 5 minutes
+  },
+  payments: {
+    providers: [],  // Auto-adds CronosProvider
+    defaultProvider: 'cronos',
+    retryConfig: {
+      maxAttempts: 3,
+      baseDelay: 1000,
+      maxDelay: 10000
+    }
+  }
+});</code></pre>
+                    </div>
+                </div>
+                
+                <div class="summary-box">
+                    <h3>🎯 Summary: You Now Know</h3>
+                    <ol>
+                        <li><strong>What it is:</strong> A smart assistant for smart contracts</li>
+                        <li><strong>How it works:</strong> Events → Agents → Decisions → Actions</li>
+                        <li><strong>Core components:</strong> SDK, Agents, Contracts, Events, Policies</li>
+                        <li><strong>Built-in agents:</strong> Risk, Liquidity, Emergency, Threshold, Anomaly</li>
+                        <li><strong>Custom agents:</strong> How to build your own decision makers</li>
+                        <li><strong>Real implementation:</strong> Complete DeFi vault protection</li>
+                        <li><strong>Testing:</strong> How to verify everything works</li>
+                        <li><strong>Advanced features:</strong> AI, policies, audit trails</li>
+                        <li><strong>Enterprise features:</strong> Control plane, policy packs, telemetry</li>
+                        <li><strong>UI components:</strong> Complete React dashboard system</li>
+                        <li><strong>x402 payments:</strong> Micropayments and usage-based billing</li>
+                        <li><strong>x402 payments:</strong> Micropayments and usage-based billing</li>
+                        <li><strong>Webhooks & API:</strong> HTTP endpoints and blockchain event processing</li>
+                        <li><strong>Auditing & Compliance:</strong> Decision tracking and regulatory reporting</li>
+                        <li><strong>Production:</strong> How to deploy safely</li>
+                    </ol>
+                    
+                    <div class="key-insight">
+                        <p><strong>Key Insight:</strong> This SDK turns reactive smart contracts into proactive intelligent systems that can analyze, decide, and recommend actions in real-time.</p>
+                    </div>
+                    
+                    <div class="complete-capabilities">
+                        <h4>🚀 Complete Capabilities Summary</h4>
+                        <div class="capabilities-grid">
+                            <div class="capability-category">
+                                <h5>🤖 Core Intelligence</h5>
+                                <ul>
+                                    <li>5 Built-in AI Agents</li>
+                                    <li>Custom Agent Framework</li>
+                                    <li>OpenAI Integration</li>
+                                    <li>Real-time Decision Making</li>
+                                </ul>
+                            </div>
+                            <div class="capability-category">
+                                <h5>🔗 Blockchain Integration</h5>
+                                <ul>
+                                    <li>Event Monitoring</li>
+                                    <li>Contract Adapters</li>
+                                    <li>Multi-network Support</li>
+                                    <li>Transaction Automation</li>
+                                </ul>
+                            </div>
+                            <div class="capability-category">
+                                <h5>🏢 Enterprise Features</h5>
+                                <ul>
+                                    <li>Control Plane Integration</li>
+                                    <li>Dynamic Policy Packs</li>
+                                    <li>Cryptographic Verification</li>
+                                    <li>Real-time Telemetry</li>
+                                </ul>
+                            </div>
+                            <div class="capability-category">
+                                <h5>🎛️ User Interface</h5>
+                                <ul>
+                                    <li>React Dashboard Components</li>
+                                    <li>Agent Console</li>
+                                    <li>Event Monitor</li>
+                                    <li>Policy Manager</li>
+                                </ul>
+                            </div>
+                            <div class="capability-category">
+                                <h5>🔐 Security & Compliance</h5>
+                                <ul>
+                                    <li>Audit Trail System</li>
+                                    <li>PII Redaction</li>
+                                    <li>Policy Enforcement</li>
+                                    <li>Cryptographic Signing</li>
+                                </ul>
+                            </div>
+                            <div class="capability-category">
+                                <h5>🔧 Developer Tools</h5>
+                                <ul>
+                                    <li>TypeScript Support</li>
+                                    <li>Comprehensive Testing</li>
+                                    <li>Logging & Debugging</li>
+                                    <li>Hot Reloading</li>
+                                </ul>
+                            </div>
+                            <div class="capability-category">
+                                <h5>💳 Payment Systems</h5>
+                                <ul>
+                                    <li>x402 Payment Standard</li>
+                                    <li>Pay-per-Decision Model</li>
+                                    <li>Web3 Payment Integration</li>
+                                    <li>Usage Metering & Billing</li>
+                                </ul>
+                            </div>
+                            <div class="capability-category">
+                                <h5>🔗 API & Webhooks</h5>
+                                <ul>
+                                    <li>HTTP REST API</li>
+                                    <li>Blockchain Webhooks</li>
+                                    <li>Event-Driven Automation</li>
+                                    <li>Express.js Integration</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

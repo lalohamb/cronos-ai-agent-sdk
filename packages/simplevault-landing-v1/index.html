@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Vault - Cronos Automation for Agency</title>
+    <meta property="og:image" content="https://bolt.new/static/og_default.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png" />
+
+    <!-- Suppress wallet extension errors -->
+    <script>
+      // Suppress harmless wallet extension errors
+      const originalError = console.error;
+      console.error = function(...args) {
+        const msg = args[0]?.toString() || '';
+        // Filter out known wallet extension errors
+        if (msg.includes('Could not establish connection') ||
+            msg.includes('Receiving end does not exist') ||
+            msg.includes('chainId') && msg.includes('getter')) {
+          return; // Suppress these errors
+        }
+        originalError.apply(console, args);
+      };
+
+      // Suppress unhandled promise rejections from extensions
+      window.addEventListener('unhandledrejection', function(event) {
+        const msg = event.reason?.message || event.reason?.toString() || '';
+        if (msg.includes('chainId') || msg.includes('inpage.js')) {
+          event.preventDefault(); // Suppress wallet extension errors
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

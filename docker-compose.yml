@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # UI Demo
+  ui-demo:
+    build:
+      context: .
+      dockerfile: packages/examples/ui-demo/Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_CRONOS_RPC_URL=${CRONOS_RPC_URL}
+    restart: unless-stopped
+
+  # Commercial Demo (if exists)
+  # commercial-demo:
+  #   build:
+  #     context: .
+  #     dockerfile: packages/examples02/defi-dashboard/Dockerfile
+  #   ports:
+  #     - "3001:80"
+  #   environment:
+  #     - VITE_CRONOS_RPC_URL=${CRONOS_RPC_URL}
+  #   restart: unless-stopped
+
+networks:
+  default:
+    name: cronos-network

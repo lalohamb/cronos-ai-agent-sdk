@@ -1,0 +1,80 @@
+import express from 'express';
+import { CronosAgentSDK } from '../CronosAgentSDK';
+import { ExpressAdapter, WebhookHandler } from './index';
+import { RiskMonitor, LiquidityOptimizer } from '../agents/builtin';
+
+// Example: HTTP API Server Setup
+async function createAPIServer() {
+  const app = express();
+  app.use(express.json());
+
+  // Initialize SDK
+  const sdk = new CronosAgentSDK({
+    network: 'cronos-testnet',
+    rpcUrl: 'https://evm-t3.cronos.org',
+    privateKey: process.env.PRIVATE_KEY,
+    payments: {
+      providers: [],
+      retryConfig: { maxAttempts: 3, baseDelay: 1000, maxDelay: 5000 }
+    }
+  });
+
+  // Register agents
+  sdk.registerAgent('risk-monitor', new RiskMonitor());
+  sdk.registerAgent('liquidity-optimizer', new LiquidityOptimizer());
+
+  // Setup API routes
+  const adapter = new ExpressAdapter(sdk);
+  const webhookHandler = new WebhookHandler(sdk);
+
+  // Agent execution endpoint
+  app.post('/api/agents/execute', async (req, res) => {
+    try {
+      const { agentId, context } = req.body;
+      const decision = await sdk.executeAgent(agentId, context);
+      res.json(decision);
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('Payment required')) {
+        res.status(402).json({ error: 'Payment required', paymentRequired: true });
+      } else {
+        res.status(500).json({ error: error instanceof Error ? error.message : 'Unknown error' });
+      }
+    }
+  });
+
+  // Payment processing endpoint
+  app.post('/api/payments', async (req, res) => {
+    try {
+      const { amount, currency, recipient, providerId } = req.body;
+      const result = await sdk.processPayment(amount, currency, recipient, providerId);
+      res.status(result.success ? 200 : 402).json(result);
+    } catch (error) {
+      res.status(500).json({ error: error instanceof Error ? error.message : 'Payment failed' });
+    }
+  });
+
+  // Usage tracking endpoint
+  app.get('/api/usage/:userId', (req, res) => {
+    const tracker = sdk.getUsageTracker();
+    if (!tracker) {
+      return res.status(404).json({ error: 'Usage tracking not enabled' });
+    }
+    
+    const usage = tracker.getUsage(req.params.userId);
+    res.json(usage);
+  });
+
+  // Webhook endpoint for blockchain events
+  app.post('/api/webhooks/events', webhookHandler.createWebhookEndpoint());
+
+  await sdk.start();
+  
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Cronos AI Agent API server running on port ${port}`);
+  });
+
+  return app;
+}
+
+export { createAPIServer };

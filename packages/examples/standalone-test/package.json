@@ -1,0 +1,15 @@
+{
+  "name": "standalone-test",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "ts-node test-agents.ts"
+  },
+  "dependencies": {
+    "@sentinel/ai-agent-sdk": "file:../../core"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
