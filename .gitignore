@@ -33,6 +33,7 @@ coverage/
 !BUILD_TEST_STEPS.md
 !MONOREPO_GUIDE.md
 
+
 # Keep package-level deployment docs
 !packages/*/README.md
 !packages/*/QUICK_START.md
@@ -41,3 +42,7 @@ coverage/
 
 # Keep all docs folder
 !docs/**/*.md
+
+# AI chat history
+ai-chats/
+*ai-chats/
