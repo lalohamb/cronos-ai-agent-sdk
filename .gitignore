@@ -43,6 +43,7 @@ coverage/
 # Keep all docs folder
 !docs/**/*.md
 
+#   AI chat history
 # AI chat history
 ai-chats/
 *ai-chats/
